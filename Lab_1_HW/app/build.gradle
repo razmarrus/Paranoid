@@ -12,9 +12,10 @@ androidGitVersion {
     format '%tag%%.count%%<commit>%%-branch%%...dirty%'
     hideBranches = [ 'develop' ]
     onlyIn 'my-library'
-    prefix 'lib-'
+    //prefix 'lib-'
     tagPattern(/^R[0-9]+.*/)
     untrackedIsDirty = false
+    //untrackedIsDirty = true
 }
 
 android {
@@ -33,11 +34,11 @@ android {
         applicationId "com.example.andy.myapplication"
         minSdkVersion 15
         targetSdkVersion 23
-        //versionCode 1
+        versionCode 1
         //versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         versionName androidGitVersion.name()
-        versionCode androidGitVersion.code()
+        //versionCode androidGitVersion.code()
     }
     buildTypes {
         release {
@@ -51,10 +52,6 @@ android {
         checkReleaseBuilds false
     }
 
-    androidGitVersion {
-        codeFormat = 'MNNPPP'
-        variants applicationVariants
-    }
 }
 
 dependencies {
