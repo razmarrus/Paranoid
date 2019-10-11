@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String deviceID = " ";
     private String versionName = " ";
     private TextView mVerName;
+    //private boolean flag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,18 +39,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         if(v.getId() == R.id.button)
         {
-            Toast.makeText(MainActivity.this, deviceID,Toast.LENGTH_LONG).show();
             getID();
+            if(deviceID != " ")
+                Toast.makeText(MainActivity.this, deviceID,Toast.LENGTH_LONG).show();
         }
     }
 
     private void getID() {
-        telephonyManager =
-                (TelephonyManager) getSystemService(this.TELEPHONY_SERVICE);
+        telephonyManager = (TelephonyManager) getSystemService(this.TELEPHONY_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, 101);
         }
-        else deviceID = telephonyManager.getDeviceId();
+        else {
+            deviceID = telephonyManager.getDeviceId();
+        }
     }
 
     @Override
@@ -61,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     return;
                 }
                 deviceID = telephonyManager.getDeviceId();
-                Toast.makeText(MainActivity.this, deviceID, Toast.LENGTH_LONG).show();
+                //Toast.makeText(MainActivity.this, deviceID, Toast.LENGTH_LONG).show();
             }
             else
                 Toast.makeText(MainActivity.this, "*Extremely convincing explanation*", Toast.LENGTH_LONG).show();
