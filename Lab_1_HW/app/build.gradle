@@ -1,8 +1,10 @@
 plugins {
     id 'com.gladed.androidgitversion' version '0.4.10'
+    id "org.ajoberstar.grgit" version "4.0.0-rc.1"
 }
 
 apply plugin: 'com.android.application'
+
 
 
 androidGitVersion {
@@ -12,9 +14,9 @@ androidGitVersion {
     format '%tag%%.count%%<commit>%%-branch%%...dirty%'
     hideBranches = [ 'develop' ]
     onlyIn 'my-library'
-    //prefix 'lib-'
-    tagPattern(/^R[0-9]+.*/)
+    tagPattern(/^[0-9]+.*/)
     untrackedIsDirty = false
+    //prefix 'lib-'
     //untrackedIsDirty = true
 }
 
@@ -34,11 +36,11 @@ android {
         applicationId "com.example.andy.myapplication"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 1
+        //versionCode 1
         //versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         versionName androidGitVersion.name()
-        //versionCode androidGitVersion.code()
+        versionCode androidGitVersion.code()
     }
     buildTypes {
         release {
@@ -61,4 +63,12 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    //compile 'org.ajoberstar.grgit:grgit-core:<version>'
 }
+
+
+repositories {
+    jcenter()
+}
+
+
