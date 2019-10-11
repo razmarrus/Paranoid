@@ -11,7 +11,7 @@ androidGitVersion {
     abis = ["armeabi":1, "armeabi-v7a":2 ]
     baseCode 200000
     codeFormat 'MNNPPP'
-    format '%tag%%.count%%<commit>%%-branch%%...dirty%'
+    format '%tag%-%count%%<commit>%%-branch%%...dirty%'
     hideBranches = [ 'develop' ]
     onlyIn 'my-library'
     tagPattern(/^[0-9]+.*/)
