@@ -24,6 +24,16 @@ class Engi : AppCompatActivity() {
     // If true, do not allow to add another DOT
     var lastDot: Boolean = false
 
+    var lastFunction: Boolean = false
+
+    var lastOperator: Boolean = false
+
+    var brCount: Int = 0
+
+    var lastBracket: Boolean = false
+
+    var clear: Boolean = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_engi)
@@ -48,12 +58,17 @@ class Engi : AppCompatActivity() {
             // If current state is Error, replace the error message
             txtInput.text = (view as Button).text
             stateError = false
-        } else {
+        } else if(!stateError && !lastFunction){// && (lastBracket || lastOperator || clear)) {
             // If not, already there is a valid expression so append to it
             txtInput.append((view as Button).text)
+            lastNumeric = true
+            lastFunction = false
+            lastBracket = false
+            lastOperator = false
+            clear = false
         }
         // Set the flag
-        lastNumeric = true
+
     }
 
     /**
@@ -64,6 +79,8 @@ class Engi : AppCompatActivity() {
             txtInput.append(".")
             lastNumeric = false
             lastDot = true
+            lastBracket = false
+            lastOperator = false
         }
     }
 
@@ -71,13 +88,51 @@ class Engi : AppCompatActivity() {
      * Append +,-,*,/ operators to the TextView
      */
     fun onOperator(view: View) {
-        if (lastNumeric && !stateError) {
+        if (!lastOperator && !stateError && !clear) {
             txtInput.append((view as Button).text)
             lastNumeric = false
+            lastFunction = false
             lastDot = false    // Reset the DOT flag
+            lastBracket = false
+            lastOperator = true
         }
     }
 
+    fun onFunction(view: View){
+        if(!lastNumeric && !lastFunction && !stateError)
+        {
+            txtInput.append((view as Button).text)
+            lastFunction = true
+            lastDot = false    // Reset the DOT flag
+            clear = false
+            lastOperator = false
+            lastBracket = false
+        }
+    }
+
+    fun onCloseBracket(view: View){
+        if((lastNumeric || lastFunction) && !stateError && brCount > 0){
+            txtInput.append((view as Button).text)
+            lastNumeric = false
+            lastFunction = false
+            lastDot = false    // Reset the DOT flag
+            lastOperator = false
+            lastBracket = true
+            brCount -=1
+        }
+    }
+
+    fun onOpenBracket(view: View){
+        if( !stateError && !lastNumeric){
+            txtInput.append((view as Button).text)
+            lastFunction = false
+            lastDot = false    // Reset the DOT flag
+            lastOperator = false
+            lastBracket = true
+            brCount +=1
+            clear = false
+        }
+    }
 
     /**
      * Clear the TextView
@@ -85,8 +140,13 @@ class Engi : AppCompatActivity() {
     fun onClear(view: View) {
         this.txtInput.text = ""
         lastNumeric = false
+        lastBracket = false
+        lastFunction = false
+        lastOperator = false
         stateError = false
         lastDot = false
+        brCount = 0
+        clear = true
     }
 
     /**
@@ -95,7 +155,7 @@ class Engi : AppCompatActivity() {
     fun onEqual(view: View) {
         // If the current state is error, nothing to do.
         // If the last input is a number only, solution can be found.
-        if (lastNumeric && !stateError) {
+        if (!lastOperator && !stateError && brCount == 0) {
             // Read the expression
             val txt = txtInput.text.toString()
             // Create an Expression (A class from exp4j library)
@@ -110,6 +170,8 @@ class Engi : AppCompatActivity() {
                 txtInput.text = "Error"
                 stateError = true
                 lastNumeric = false
+                lastFunction = false
+
             }
         }
     }

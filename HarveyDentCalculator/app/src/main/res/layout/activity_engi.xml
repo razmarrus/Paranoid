@@ -274,7 +274,7 @@
                         android:layout_height="35dp"
                         android:layout_weight="1"
                         android:background="@drawable/button"
-                        android:onClick="onOperator"
+                        android:onClick="onFunction"
                         android:text="sin" />
 
                     <Button
@@ -283,7 +283,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@drawable/button"
-                        android:onClick="onOperator"
+                        android:onClick="onFunction"
                         android:text="cos" />
 
                     <Button
@@ -292,7 +292,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@drawable/button"
-                        android:onClick="onOperator"
+                        android:onClick="onFunction"
                         android:text="tan" />
 
                     <Button
@@ -301,7 +301,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@drawable/button"
-                        android:onClick="onOperator"
+                        android:onClick="onFunction"
                         android:text="abs" />
                 </TableRow>
 
@@ -317,7 +317,7 @@
                         android:layout_height="35dp"
                         android:layout_weight="1"
                         android:background="@drawable/button"
-                        android:onClick="onOperator"
+                        android:onClick="onFunction"
                         android:text="asin" />
 
                     <Button
@@ -326,7 +326,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@drawable/button"
-                        android:onClick="onOperator"
+                        android:onClick="onFunction"
                         android:text="acos" />
 
                     <Button
@@ -335,7 +335,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@drawable/button"
-                        android:onClick="onOperator"
+                        android:onClick="onFunction"
                         android:text="atan" />
 
                     <Button
@@ -344,7 +344,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@drawable/button"
-                        android:onClick="onOperator"
+                        android:onClick="onFunction"
                         android:text="sqrt" />
                 </TableRow>
 
@@ -360,7 +360,7 @@
                         android:layout_height="35dp"
                         android:layout_weight="1"
                         android:background="@drawable/button"
-                        android:onClick="onOperator"
+                        android:onClick="onFunction"
                         android:text="log" />
 
                     <Button
@@ -369,7 +369,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@drawable/button"
-                        android:onClick="onOperator"
+                        android:onClick="onFunction"
                         android:text="log2" />
 
                     <Button
@@ -378,7 +378,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@drawable/button"
-                        android:onClick="onOperator"
+                        android:onClick="onFunction"
                         android:text="log10" />
 
                     <Button
@@ -387,7 +387,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@drawable/button"
-                        android:onClick="onOperator"
+                        android:onClick="onFunction"
                         android:text="cbrt" />
                 </TableRow>
 
@@ -403,7 +403,7 @@
                         android:layout_height="35dp"
                         android:layout_weight="1"
                         android:background="@drawable/button"
-                        android:onClick="onOperator"
+                        android:onClick="onFunction"
                         android:text="pi" />
 
                     <Button
@@ -412,8 +412,8 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@drawable/button"
-                        android:onClick="onOperator"
-                        android:text="exp" />
+                        android:onClick="onFunction"
+                        android:text="e" />
 
                     <Button
                         android:id="@+id/btnOpenBr"
@@ -421,7 +421,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@drawable/button"
-                        android:onClick="onOperator"
+                        android:onClick="onOpenBracket"
                         android:text="(" />
 
                     <Button
@@ -430,7 +430,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@drawable/button"
-                        android:onClick="onOperator"
+                        android:onClick="onCloseBracket"
                         android:text=")" />
                 </TableRow>
 
