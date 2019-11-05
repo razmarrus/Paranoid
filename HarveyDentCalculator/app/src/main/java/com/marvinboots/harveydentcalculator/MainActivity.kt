@@ -5,15 +5,19 @@ import android.os.Bundle
 //import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
 import android.widget.TextView
 import net.objecthunter.exp4j.ExpressionBuilder
 import android.content.Intent
+import android.content.res.Configuration
 
 
 
 class MainActivity : AppCompatActivity() {
 
     // TextView used to display the input and output
+
+    //var config = resources.configuration
     lateinit var txtInput: TextView
 
     // Represent whether the lastly pressed key is numeric or not
@@ -37,6 +41,21 @@ class MainActivity : AppCompatActivity() {
         if(view.getId() == R.id.btnChange) {
             val intent = Intent(this@MainActivity, Engi::class.java)
             startActivity(intent)
+        }
+    }
+
+    //@Override
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig);
+
+// Checks the orientation of the screen for landscape and portrait
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            //Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
+            val intent = Intent(this@MainActivity, Engi::class.java)
+            startActivity(intent)
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            //Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
         }
     }
 
