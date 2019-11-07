@@ -21,6 +21,22 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    flavorDimensions "version"
+    productFlavors {
+        free {
+            applicationId "com.marvinboots.harveydentcalculator.plebeians"
+            versionName "1.0"
+            dimension "version"
+            //applicationIdSuffix ".demo"
+            //versionNameSuffix "-demo"
+
+        }
+        pro {
+            applicationId "com.marvinboots.harveydentcalculator.patricians"
+            versionName "1.0-pro"
+            dimension "version"
+        }
+    }
 }
 
 dependencies {

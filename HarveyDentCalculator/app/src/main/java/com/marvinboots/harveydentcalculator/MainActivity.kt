@@ -31,8 +31,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //setContentView(R.layout.basic_fragment);
         setContentView(R.layout.activity_main)
         txtInput = findViewById(R.id.txtInput)
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+        {
+            val intent = Intent(this@MainActivity, Engi::class.java)
+            startActivity(intent)
+        }
     }
 
     //go to another activity

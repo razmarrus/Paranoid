@@ -93,4 +93,6 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_act">act</string>
     <string name="title_activity_engi">Engi</string>
+    <string name="engi">engi</string>
+    <string name="eq">=</string>
 </resources>
