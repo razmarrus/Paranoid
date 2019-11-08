@@ -111,7 +111,7 @@ class Engi : AppCompatActivity() {
     }
 
     fun onCloseBracket(view: View){
-        if((lastNumeric || lastFunction) && !stateError && brCount > 0){
+        if((lastNumeric || lastFunction || lastBracket) && !stateError && brCount > 0){
             txtInput.append((view as Button).text)
             lastNumeric = false
             lastFunction = false
