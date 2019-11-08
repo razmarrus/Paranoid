@@ -24,15 +24,15 @@ android {
     flavorDimensions "version"
     productFlavors {
         free {
-            applicationId "com.marvinboots.harveydentcalculator.plebeians"
+            applicationId "com.marvinboots.harveydentcalculator"
             versionName "1.0"
             dimension "version"
-            //applicationIdSuffix ".demo"
-            //versionNameSuffix "-demo"
+            applicationIdSuffix ".demo"
+            versionNameSuffix "-demo"
 
         }
         pro {
-            applicationId "com.marvinboots.harveydentcalculator.patricians"
+            applicationId "com.marvinboots.harveydentcalculator"
             versionName "1.0-pro"
             dimension "version"
         }
