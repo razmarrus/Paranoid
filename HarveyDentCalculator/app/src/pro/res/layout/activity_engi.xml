@@ -9,7 +9,7 @@
 
     <TextView
         android:id="@+id/txtInput"
-        android:layout_width="384dp"
+        android:layout_width="0dp"
         android:layout_height="60dp"
         android:background="#efefef"
         android:ems="10"
