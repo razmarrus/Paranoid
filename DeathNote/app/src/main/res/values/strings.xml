@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">DeathNote</string>
+    <string name="create_new_note">Create new note</string>
+</resources>

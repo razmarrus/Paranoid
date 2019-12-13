@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity" />-->
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorAppBackground"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/footer"
+        android:fillViewport="true"
+        android:paddingTop="5dp"
+        android:paddingEnd="5dp"
+        android:paddingStart="5dp" >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical" />
+
+    </ScrollView>
+
+    <TableLayout
+        android:id="@+id/footer"
+        android:background="@color/colorBottomToolbar"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="0" >
+
+        <TableRow
+            android:id="@+id/firstRow"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            tools:ignore="UselessParent">
+
+            <Button
+                android:id="@+id/create_new_note"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textAlignment="textStart"
+                android:layout_marginStart="10dp"
+                android:textAllCaps="false"
+                android:textColor="@color/colorHint"
+                android:background="?android:attr/selectableItemBackground"
+                android:text="@string/create_new_note" />
+
+        </TableRow>
+
+    </TableLayout>
+
+</RelativeLayout>
