@@ -45,6 +45,8 @@ dependencies {
     //compile 'com.android.support:recyclerview-v7:26.1.0'
     implementation "androidx.core:core-ktx:+"
     implementation "androidx.recyclerview:recyclerview:1.1.0"
+    implementation "androidx.cardview:cardview:1.0.0"
+
     // For control over item selection of both touch and mouse driven selection
 
 

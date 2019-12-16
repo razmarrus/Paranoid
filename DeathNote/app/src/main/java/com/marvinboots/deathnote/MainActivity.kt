@@ -22,11 +22,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 
 import java.util.*
 //StaggeredGridLayoutManager//core.app.Recy.recyclerview:recyclerview
-/*
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.StaggeredGridLayoutManager
-import android.support.v7.widget.helper.ItemTouchHelper
-*/
+
 
 import android.util.Log
 import android.view.Menu
@@ -37,6 +33,7 @@ import android.widget.Button
 import android.content.Context
 import com.marvinboots.deathnote.ui.main.GridSpacingItemDecoration
 import com.marvinboots.deathnote.ui.main.ItemObjects
+import com.marvinboots.deathnote.RecycleViewAdapter
 
 import org.json.JSONException
 import org.json.JSONObject
@@ -54,7 +51,7 @@ import java.util.Collections
 class MainActivity : AppCompatActivity() {
 
     lateinit var staggeredList: List<ItemObjects>
-    //lateinit var rcAdapter: SolventRecyclerViewAdapter
+    lateinit var rcAdapter: RecycleViewAdapter
 
     lateinit var listViewItems: MutableList<ItemObjects>
     lateinit var recyclerView: RecyclerView
@@ -102,11 +99,13 @@ class MainActivity : AppCompatActivity() {
         // Load notes from internal storage
         staggeredList = loadNotes()
 
-        /*rcAdapter = SolventRecyclerViewAdapter(staggeredList)
+
+        //rcAdapter = RecyclerViewAdapter(staggeredList)
+        rcAdapter.updateList(staggeredList)
         recyclerView.adapter = rcAdapter
 
         // Drag and drop
-        val ith = ItemTouchHelper(_ithCallback)
+        /*val ith = ItemTouchHelper(_ithCallback)
         ith.attachToRecyclerView(recyclerView)
 
         // Create a simple note button click listener
