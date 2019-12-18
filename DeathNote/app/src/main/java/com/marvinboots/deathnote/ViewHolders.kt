@@ -42,7 +42,7 @@ class ViewHolders( itemView: View  ) : RecyclerView.ViewHolder(itemView),  View.
         Toast.makeText(view.context, "Clicked Position = " + getPosition(), Toast.LENGTH_SHORT)
             .show()
 
-        val simpleNoteEditionIntent = Intent(view.context, NoteCreation::class.java)
+        var simpleNoteEditionIntent = Intent(view.context, NoteCreation::class.java)
         simpleNoteEditionIntent.putExtra("title", title.text)
         simpleNoteEditionIntent.putExtra("content", content.text)
         simpleNoteEditionIntent.putExtra("color", color)

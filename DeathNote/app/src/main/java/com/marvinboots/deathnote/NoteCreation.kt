@@ -8,8 +8,9 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 //import android.support.v7.app.AppCompatActivity
-//import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+
 //import androidx.core.app.ActivityCompat
 import android.os.Bundle
 import android.text.TextUtils
@@ -21,7 +22,7 @@ import android.widget.LinearLayout
 import android.widget.RadioGroup
 import android.widget.TableLayout
 import android.widget.TextView
-import androidx.appcompat.app.ActionBar
+//import androidx.appcompat.app.ActionBar
 
 //import com.mykeep.r3j3ct3d.mykeep.R;
 
@@ -43,7 +44,7 @@ class NoteCreation : AppCompatActivity()  {
     lateinit  var noteLayout: LinearLayout
     lateinit  var noteActionsLayout : LinearLayout
     lateinit  var bottomToolbar: TableLayout
-    lateinit  var actionBar : ActionBar?
+    lateinit var actionBar : ActionBar//androidx.appcompat.app.ActionBar
     lateinit  var noteActionsButton: ImageButton
 
     var noteColor: String? = null
@@ -54,13 +55,27 @@ class NoteCreation : AppCompatActivity()  {
     var lastContent:String? = null
     var notePosition: Int = 0
 
+
+        //override fun onCreate(savedInstanceState: Bundle?) {
     @SuppressLint("SetTextI18n")
-    protected fun onCreate(savedInstanceState: Bundle) {
+    override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_simple_note_creation)
 
-        actionBar = supportActionBar
+            //actionBar.supportActionBar
+            //actionBar = getSupportActionBar()
+            //actionBar.getSupportActionBar()
+        //actionBar.setDisplayHomeAsUpEnabled(true);
+
+
+
+        //var actionBar = ActionBar()//supportActionBar //ActionBar//this!!.getSupportActionBar
+        //var actionBar : ActionBar//= supportActionBar
+            //SupportActionBar(actionBar)
+        //var actionBar = ActionBar.getSupportActionBar
+            //actionBar = supportActionBar;
+
         titleEditText = findViewById(R.id.title_edit_text)
         contentEditText = findViewById(R.id.content_edit_text)
         colorPickerRadioGroup = findViewById(R.id.color_picker_radio_group)
@@ -82,7 +97,7 @@ class NoteCreation : AppCompatActivity()  {
         noteActionsLayout.setBackgroundColor(Color.parseColor(color))
         bottomToolbar.setBackgroundColor(Color.parseColor(color))
         noteColor = color
-        actionBar.setBackgroundDrawable(ColorDrawable(Color.parseColor(color)))
+        //actionBar.setBackgroundDrawable(ColorDrawable(Color.parseColor(color)))
         window.statusBarColor = darkenNoteColor(Color.parseColor(noteColor), 0.7f)
 
         // Set title and content if edit
@@ -155,64 +170,63 @@ class NoteCreation : AppCompatActivity()  {
             //noteColor = resources.getString(R.color.colorNoteCyan)//R.color.colorNoteDefault)
             //noteColor = getResources().getString(R.color.colorNotePink);
             //Color.parseColor("#"+Integer.toHexString(ContextCompat.getColor(context, R.color.redish)))
-            Color.parseColor("#"+Integer.toHexString(getColor( R.color.colorNotePink)))
+            Color.parseColor("#"+Integer.toHexString(getColor( R.color.colorNoteDefault)))
         }
         noteLayout.setBackgroundColor(Color.parseColor(noteColor))
         noteActionsLayout.setBackgroundColor(Color.parseColor(noteColor))
         bottomToolbar.setBackgroundColor(Color.parseColor(noteColor))
-        actionBar.setBackgroundDrawable(ColorDrawable(Color.parseColor(noteColor)))
+        //actionBar.setBackgroundDrawable(ColorDrawable(Color.parseColor(noteColor)))
         window.statusBarColor = darkenNoteColor(Color.parseColor(noteColor), 0.7f)
 
         noteActionsButton.setBackgroundColor(darkenNoteColor(Color.parseColor(noteColor), 0.9f))
     }
-}
 
-fun darkenNoteColor(color: Int, factor: Float): Int {
-    val a = Color.alpha(color)
-    val r = Math.round(Color.red(color) * factor)
-    val g = Math.round(Color.green(color) * factor)
-    val b = Math.round(Color.blue(color) * factor)
-    return Color.argb(
-        a,
-        Math.min(r, 255),
-        Math.min(g, 255),
-        Math.min(b, 255)
-    )
-}
+
+    fun darkenNoteColor(color: Int, factor: Float): Int {
+        val a = Color.alpha(color)
+        val r = Math.round(Color.red(color) * factor)
+        val g = Math.round(Color.green(color) * factor)
+        val b = Math.round(Color.blue(color) * factor)
+        return Color.argb(
+            a,
+            Math.min(r, 255),
+            Math.min(g, 255),
+            Math.min(b, 255)
+        )
+    }
 
 // Save note content on back pressed
-fun onBackPressed() {
+    override fun onBackPressed() {
 
-    var changed: Boolean? = false
-    /*val titleText = titleEditText.text.toString()
-    val contentText = contentEditText.text.toString()
+        var changed: Boolean? = false
+        val titleText = titleEditText.getText().toString()
+        val contentText = contentEditText.getText().toString()
 
-    if (titleText != lastTitle || contentText != lastContent)
-        changed = true
+        if (titleText != lastTitle || contentText != lastContent)
+            changed = true
 
-    // Check if fields are not empty
-    if ((!TextUtils.isEmpty(titleText) || !TextUtils.isEmpty(contentText)) && changed!!) {
+        // Check if fields are not empty
+        if ((!TextUtils.isEmpty(titleText) || !TextUtils.isEmpty(contentText)) && changed!!) {
 
 
-        val noteJSON = JSONObject()
-        try {
-            noteJSON.put("noteTitle", titleEditText.text.toString())
-            noteJSON.put("noteContent", contentEditText.text.toString())
-            noteJSON.put("noteColor", noteColor)
-            noteJSON.put("noteCreationDate", creationDateString)
-            noteJSON.put("noteLastUpdateDate", lastUpdateDateString)
-            noteJSON.put("notePosition", notePosition)
-        } catch (e: JSONException) {
-            e.printStackTrace()
+            val noteJSON = JSONObject()
+            try {
+                noteJSON.put("noteTitle", titleEditText.getText().toString())
+                noteJSON.put("noteContent", contentEditText.getText().toString())
+                noteJSON.put("noteColor", noteColor)
+                noteJSON.put("noteCreationDate", creationDateString)
+                noteJSON.put("noteLastUpdateDate", lastUpdateDateString)
+                noteJSON.put("notePosition", notePosition)
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
+
+            // Return note JSON to MainActivity
+            val resultIntent = Intent()
+            resultIntent.putExtra("noteJSON", noteJSON.toString())
+            setResult(Activity.RESULT_OK, resultIntent)
         }
-
-        // Return note JSON to MainActivity
-        val resultIntent = Intent()
-        resultIntent.putExtra("noteJSON", noteJSON.toString())
-        setResult(Activity.RESULT_OK, resultIntent)
+        this.finish()
     }
-    this.finish()*/
-//}
-
 
 }
