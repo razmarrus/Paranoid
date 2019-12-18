@@ -1,16 +1,12 @@
 package com.marvinboots.deathnote
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.graphics.Typeface
 //import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.marvinboots.deathnote.ui.main.ItemObjects
-import androidx.recyclerview.widget.RecyclerView.Adapter
-import java.util.List
 
 class RecycleViewAdapter(itemList: kotlin.collections.List<ItemObjects>) : RecyclerView.Adapter<ViewHolders>() {
     //private List<ItemObjects> _itemList;
@@ -37,7 +33,7 @@ class RecycleViewAdapter(itemList: kotlin.collections.List<ItemObjects>) : Recyc
         return ViewHolders(layoutView)
     }
 
-    override fun onBindViewHolder(holder: ViewHolders, position: Int) {
+   override fun onBindViewHolder(holder: ViewHolders, position: Int) {
 
         holder.title.setText(_itemList!![position].getTitle())
         // If title is empty, hide title edit text
@@ -50,16 +46,10 @@ class RecycleViewAdapter(itemList: kotlin.collections.List<ItemObjects>) : Recyc
             holder.content.setHeight(0)
         }
 
-        /*if (_itemList!![position].getImage() !== -1) {
-            holder.image.setImageResource(_itemList!![position].getImage())
-        }*/
-
-        if (_itemList!![position].getImage() !== -1 || !holder.title.getText().toString().isEmpty() && holder.content.getText().toString().isEmpty()) {
-
-            val scale = _parent!!.context.resources.displayMetrics.density
-            val pixels = (8 * scale + 0.5f).toInt()
-            holder.title.setPadding(pixels, pixels, pixels, pixels)
-        }
+       holder.tags.setText(_itemList!![position].getTags())
+       if (holder.tags.getText().toString().isEmpty()) {
+           holder.tags.setHeight(0)
+       }
 
         if (holder.content.getText().toString().length > 0 && holder.content.getText().toString().length < 6) {
             var typeface: Typeface? = null
@@ -110,11 +100,7 @@ class RecycleViewAdapter(itemList: kotlin.collections.List<ItemObjects>) : Recyc
             holder.content.setTypeface(typeface)
             holder.content.setTextSize(16f)
         }
-        if (!holder.title.getText().toString().isEmpty())
-            holder.title.setBackgroundColor(Color.parseColor(_itemList!![position].getColor()))
-        if (!holder.content.getText().toString().isEmpty())
-            holder.content.setBackgroundColor(Color.parseColor(_itemList!![position].getColor()))
-        holder.color = _itemList!![position].getColor()
+
         holder.creationDate = _itemList!![position].getCreationDate()
     }
 

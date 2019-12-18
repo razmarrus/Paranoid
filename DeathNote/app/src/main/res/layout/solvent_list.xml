@@ -47,6 +47,17 @@
             android:maxLines="9"
             android:padding="8dp" />
 
+        <TextView
+            android:id="@+id/note_tags"
+            android:fontFamily="@font/roboto_slab_thin"
+            android:layout_below="@+id/note_title"
+            android:layout_width="match_parent"
+            android:textColor="@color/colorBlack"
+            android:layout_height="wrap_content"
+            android:background="@color/colorNoteLightBlue"
+            android:maxLines="9"
+            android:padding="8dp" />
+
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

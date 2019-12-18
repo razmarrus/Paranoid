@@ -72,7 +72,6 @@ class MainActivity : AppCompatActivity() {
         recyclerView.setHasFixedSize(true)
 
         // Check orientation to put the good amount of columns
-        //var column = 2
         if (resources.configuration.orientation == 2) {//==={
             var column = 3
             val staggeredGridLayoutManager = StaggeredGridLayoutManager(column, 1)
@@ -90,11 +89,8 @@ class MainActivity : AppCompatActivity() {
         val scale = resources.displayMetrics.density
         val spacing = (1 * scale + 0.5f).toInt()
         recyclerView.addItemDecoration(GridSpacingItemDecoration(spacing))
-        // Load data
-        //staggeredList = getListItemData();
 
         // Load notes from internal storage
-        //staggeredList = getListItemData()
         staggeredList = loadNotes()
 
 
@@ -117,8 +113,9 @@ class MainActivity : AppCompatActivity() {
             val simpleNoteIntent = Intent(applicationContext, NoteCreation::class.java)
             simpleNoteIntent.putExtra("title", "")
             simpleNoteIntent.putExtra("content", "")
-            simpleNoteIntent.putExtra("color", resources.getString(R.color.colorNoteDefault))
+            //simpleNoteIntent.putExtra("color", resources.getString(R.color.colorNoteDefault))
             simpleNoteIntent.putExtra("creationDate", "")
+            simpleNoteIntent.putExtra("tags", "")
             simpleNoteIntent.putExtra("position", -1)
             // TODO
             startActivityForResult(simpleNoteIntent, 1)
@@ -137,10 +134,17 @@ class MainActivity : AppCompatActivity() {
 
                 val noteTitle = json.getString("noteTitle")
                 val noteContent = json.getString("noteContent")
-                val noteColor = json.getString("noteColor")
+                //val noteColor = json.getString("noteColor")
                 val noteLastUpdateDate = json.getString("noteLastUpdateDate")
                 val noteCreationDate = json.getString("noteCreationDate")
                 val notePosition = json.getInt("notePosition")
+
+                val noteTags = json.getString("noteTags")
+                /*val JSONnoteTags = json.getJSONArray("tags")
+
+                var noteTags = List(JSONnoteTags.length()) {
+                    JSONnoteTags.getString(it)*/
+                //}
 
                 saveNote(noteJSON, noteCreationDate)
 
@@ -151,9 +155,10 @@ class MainActivity : AppCompatActivity() {
                         ItemObjects(
                             noteTitle,
                             noteContent,
-                            noteColor,
+                            //noteColor,
                             noteLastUpdateDate,
-                            noteCreationDate
+                            noteCreationDate,
+                            noteTags
                         )
                     )
                     rcAdapter.notifyItemChanged(notePosition)
@@ -162,9 +167,10 @@ class MainActivity : AppCompatActivity() {
                         ItemObjects(
                             noteTitle,
                             noteContent,
-                            noteColor,
+                            //noteColor,
                             noteLastUpdateDate,
-                            noteCreationDate
+                            noteCreationDate,
+                            noteTags
                         )
                     )
                     rcAdapter.notifyDataSetChanged()
@@ -269,10 +275,17 @@ class MainActivity : AppCompatActivity() {
                 e.printStackTrace()
             }
 
-            var noteColor: String? = null
+            //var noteTags: List<String>? = null
+            var noteTags: String? = null
             try {
-                if (json != null) {
-                    noteColor = json.getString("noteColor")
+                if (json != null)
+                {
+                    noteTags = json.getString("noteTags")
+                    /*var JSONnoteTag = json.getJSONArray("noteTags")//("tag1")
+
+                    noteTags = List(JSONnoteTag.length()) {
+                        JSONnoteTag.getString(it)
+                    }*/
                 }
             } catch (e: JSONException) {
                 e.printStackTrace()
@@ -301,9 +314,10 @@ class MainActivity : AppCompatActivity() {
                     ItemObjects(
                         noteTitle!!,
                         noteContent!!,
-                        noteColor!!,
+                        //noteColor!!,
                         noteLastUpdateDate!!,
-                        noteCreationDate!!
+                        noteCreationDate!!,
+                        noteTags!!
                     )
                 )
         }
@@ -311,7 +325,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    @SuppressLint("ResourceType")
+    /*@SuppressLint("ResourceType")
     private fun getListItemData(): List<ItemObjects> {
 
         listViewItems = ArrayList()
@@ -540,7 +554,7 @@ class MainActivity : AppCompatActivity() {
         )
 
         return listViewItems
-    }
+    }*/
 
 
     // Save notes to internal storage
@@ -556,7 +570,6 @@ class MainActivity : AppCompatActivity() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
     }
 
 
