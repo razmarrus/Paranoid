@@ -1,5 +1,8 @@
 package com.marvinboots.deathnote.ui.main
 
+import java.text.SimpleDateFormat
+import java.util.*
+
 class ItemObjects(title: String?, content: String?, color: String?) {
 
     private var _title: String? = null
@@ -10,10 +13,13 @@ class ItemObjects(title: String?, content: String?, color: String?) {
     private var _creationDate: String? = null
 
     init{//(title: String, content: String, color: String): ??? {
-        _title = title
         _content = content
         _image = -1
         _color = color
+        if (title == null || title == "")
+            _title = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())//creationDate
+        else
+            _title = title
     }
     //internal fun ItemObjects(title: String, content: String, image: Int, color: String): ???
     constructor(title: String, content: String, color: String, image: Int) : this(title, content, color)
@@ -31,6 +37,8 @@ class ItemObjects(title: String?, content: String?, color: String?) {
         lastUpdateDate: String,
         creationDate: String
     ):  this(title, content, color, image){
+        if(_title == null)
+            _title = creationDate
         _lastUpdateDate = lastUpdateDate
         _creationDate = creationDate
     }

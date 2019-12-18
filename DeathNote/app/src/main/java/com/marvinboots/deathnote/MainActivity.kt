@@ -14,12 +14,12 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 
-//StaggeredGridLayoutManager//core.app.Recy.recyclerview:recyclerview
 
 import android.view.View
 import android.widget.Button
 
 import android.content.Context
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.marvinboots.deathnote.ui.main.GridSpacingItemDecoration
 import com.marvinboots.deathnote.ui.main.ItemObjects
 
@@ -53,10 +53,18 @@ class MainActivity : AppCompatActivity() {
 
         if (Build.VERSION.SDK_INT >= 23) {
             if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 1)
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                    1
+                )
 
             if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1)
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                    1
+                )
         }
 
 
@@ -64,20 +72,24 @@ class MainActivity : AppCompatActivity() {
         recyclerView.setHasFixedSize(true)
 
         // Check orientation to put the good amount of columns
-        var column = 2
-        if (resources.configuration.orientation == 2) //===
-            column = 3
+        //var column = 2
+        if (resources.configuration.orientation == 2) {//==={
+            var column = 3
+            val staggeredGridLayoutManager = StaggeredGridLayoutManager(column, 1)
+            recyclerView.setLayoutManager(staggeredGridLayoutManager)
+        }
+        else
+        {
+            val linearLayoutManager = LinearLayoutManager(this)
+            recyclerView.setLayoutManager(linearLayoutManager)
 
-        val staggeredGridLayoutManager = StaggeredGridLayoutManager(column, 1)
-        recyclerView.setLayoutManager(staggeredGridLayoutManager)
+        }
         // Prevent the loss of items
         recyclerView.getRecycledViewPool().setMaxRecycledViews(0, 0)
-
 
         val scale = resources.displayMetrics.density
         val spacing = (1 * scale + 0.5f).toInt()
         recyclerView.addItemDecoration(GridSpacingItemDecoration(spacing))
-
         // Load data
         //staggeredList = getListItemData();
 
@@ -216,12 +228,14 @@ class MainActivity : AppCompatActivity() {
                 bufferedReader = BufferedReader(isr)
             }
             val sb = StringBuilder()
-            var line: String
+            var line: String?
+            line = bufferedReader!!.readLine()
             try {
-                if (bufferedReader != null) {
-                    while ( bufferedReader.readLine() != null) {
-                        line = bufferedReader.readLine()
+                if (line != null) {
+                    while ( line != null) {
+                        //line = bufferedReader.readLine()
                         sb.append(line)
+                        line = bufferedReader.readLine()
                     }
                 }
             } catch (e: IOException) {
