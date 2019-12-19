@@ -17,6 +17,8 @@
     <string name="micro_notes_button">Micro notes button</string>
     <string name="photo_notes_button">Photo notes button</string>
     <string name="tag_list">List of tags</string>
+    <string name="sort_by_title">Sort by title</string>
+    <string name="sort_by_date">Sort by date</string>
 
 
 </resources>

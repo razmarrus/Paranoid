@@ -2,29 +2,57 @@ package com.marvinboots.deathnote
 
 import android.annotation.SuppressLint
 import android.graphics.Typeface
-//import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.SortedList
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.marvinboots.deathnote.ui.main.ItemObjects
 
-class RecycleViewAdapter(itemList: kotlin.collections.List<ItemObjects>) : RecyclerView.Adapter<ViewHolders>() {
+import java.util.List;
+
+class TitleSortAdapter (itemList: kotlin.collections.List<ItemObjects>) : RecyclerView.Adapter<ViewHolders>() { //itemList: kotlin.collections.List<ItemObjects>
     //private List<ItemObjects> _itemList;
     //private ViewGroup _parent;
 
+    private var _itemList2: SortedList<ItemObjects>? = null
     private var _itemList : kotlin.collections.List<ItemObjects>
     private var _parent: ViewGroup? = null
 
-   init {
+    init {
         _itemList = itemList
     }
 
-    fun updateList(itemList: kotlin.collections.List<ItemObjects>)
-    {
-        _itemList = itemList
+
+    fun compare(o1 : ItemObjects, o2 : ItemObjects) : Int? {
+        return o1.getTitle()?.compareTo(o2.getTitle()!!);
     }
 
-   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolders {
+    fun onChanged(position : Int, count : Int) {
+        notifyItemRangeChanged(position, count);
+    }
+
+    fun areContentsTheSame(oldItem : ItemObjects, newItem : ItemObjects) : Boolean {
+        return oldItem.getTitle().equals(newItem.getTitle());
+    }
+
+    fun areItemsTheSame(item1: ItemObjects, item2 : ItemObjects) : Boolean {
+        return (item1.getTitle().equals(item2.getTitle()))
+    }
+
+    fun onInserted(position : Int, count : Int) {
+        notifyItemRangeInserted(position, count);
+    }
+
+    fun onRemoved(position : Int, count : Int) {
+        notifyItemRangeRemoved(position, count);
+    }
+
+    public fun onMoved(fromPosition : Int, toPosition: Int) {
+        notifyItemMoved(fromPosition, toPosition);
+    }
+
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolders {
 
         @SuppressLint("InflateParams") val layoutView =
             LayoutInflater.from(parent.context).inflate(R.layout.solvent_list, null)
@@ -33,7 +61,15 @@ class RecycleViewAdapter(itemList: kotlin.collections.List<ItemObjects>) : Recyc
         return ViewHolders(layoutView)
     }
 
-   override fun onBindViewHolder(holder: ViewHolders, position: Int) {
+    fun addAll(items: kotlin.collections.List<ItemObjects>) {
+        _itemList2?.beginBatchedUpdates()
+        for (i in items.indices) {
+            _itemList2?.add(items.get(i))
+        }
+        _itemList2?.endBatchedUpdates()
+    }
+
+    override fun onBindViewHolder(holder: ViewHolders, position: Int) {
 
         holder.title.setText(_itemList!![position].getTitle())
         // If title is empty, hide title edit text
@@ -47,11 +83,11 @@ class RecycleViewAdapter(itemList: kotlin.collections.List<ItemObjects>) : Recyc
         }
 
 
-       holder.tags.setText(_itemList!![position].getTags())
-       if (holder.tags.getText().toString().isEmpty()) {
-           holder.tags.setHeight(0)
-           //holder.tags.setTextSize(2f)
-       }
+        holder.tags.setText(_itemList!![position].getTags())
+        if (holder.tags.getText().toString().isEmpty()) {
+            holder.tags.setHeight(0)
+            holder.tags.setTextSize(2f)
+        }
 
         if (holder.content.getText().toString().length > 0 && holder.content.getText().toString().length < 6) {
             var typeface: Typeface? = null
@@ -103,10 +139,10 @@ class RecycleViewAdapter(itemList: kotlin.collections.List<ItemObjects>) : Recyc
             holder.content.setTextSize(16f)
         }
 
-        holder.creationDate = _itemList[position].getCreationDate()
+        holder.creationDate = _itemList!![position].getCreationDate()
     }
 
-   override fun getItemCount(): Int {
+    override fun getItemCount(): Int {
 
         return if (_itemList != null) _itemList.size else 0
     }

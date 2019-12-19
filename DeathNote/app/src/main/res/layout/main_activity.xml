@@ -7,14 +7,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:id="@+id/ScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="667dp"
         android:layout_above="@+id/footer"
         android:fillViewport="true"
+        android:paddingStart="5dp"
         android:paddingTop="5dp"
-        android:paddingEnd="5dp"
-        android:paddingStart="5dp" >
+        android:paddingEnd="5dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
@@ -40,17 +42,45 @@
 
             <Button
                 android:id="@+id/create_new_note1"
-                android:layout_width="wrap_content"
+                android:layout_width="162dp"
                 android:layout_height="match_parent"
-                android:textAlignment="textStart"
                 android:layout_marginStart="10dp"
-                android:textAllCaps="false"
-                android:textColor="@color/colorHint"
                 android:background="?android:attr/selectableItemBackground"
-                android:text="@string/create_new_note" />
+                android:text="@string/create_new_note"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textColor="@color/colorHint" />
+
+            <Button
+                android:id="@+id/sort_by_title"
+                android:layout_width="wrap_content"
+                android:layout_height="64dp"
+                android:layout_marginStart="10dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:onClick="sortByTitle"
+                android:text="@string/sort_by_title"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textColor="@color/colorNoteCyan" />
+
+            <Button
+                android:id="@+id/sort_by_date"
+                android:layout_width="wrap_content"
+                android:layout_height="64dp"
+                android:layout_marginStart="10dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:onClick="sortByDate"
+                android:text="@string/sort_by_date"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textColor="@color/colorNoteCyan" />
+
 
         </TableRow>
 
     </TableLayout>
+
+
+
 
 </RelativeLayout>

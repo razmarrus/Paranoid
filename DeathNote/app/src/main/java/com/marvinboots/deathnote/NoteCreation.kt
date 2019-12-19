@@ -70,7 +70,7 @@ class NoteCreation : AppCompatActivity()  {
             titleEditText = findViewById(R.id.title_edit_text)
             contentEditText = findViewById(R.id.content_edit_text)
             tagsEditText = findViewById(R.id.tags_edit_text)
-            //colorPickerRadioGroup = findViewById(R.id.color_picker_radio_group)
+
             noteLayout = findViewById(R.id.simple_note_creation_linear_layout)
             noteActionsLayout = findViewById(R.id.note_actions_layout)
             bottomToolbar = findViewById(R.id.bottom_toolbar)
@@ -105,7 +105,7 @@ class NoteCreation : AppCompatActivity()  {
             // Get date
             if (creationDateString!!.isEmpty())
                 creationDateString =
-                    SimpleDateFormat("ddMMyyyyhhmmss", Locale.getDefault()).format(Date())
+                    SimpleDateFormat("yyyyMMddhhmmss", Locale.getDefault()).format(Date())
             lastUpdateDateString = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
 
             // Set "Last Update" field content

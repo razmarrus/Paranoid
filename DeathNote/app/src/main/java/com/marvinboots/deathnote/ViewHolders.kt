@@ -15,13 +15,6 @@ class ViewHolders(itemView: View) : RecyclerView.ViewHolder(itemView),  View.OnC
     //internal var image: ImageView
     //var color: String? = null
     var creationDate: String? = null
-    /*init
-    {
-        this.title = Title
-        this.content = Content
-        this.creationDate = CreationDate
-        this.color = Color
-    }*/
     init {
 
         super.itemView
@@ -41,7 +34,7 @@ class ViewHolders(itemView: View) : RecyclerView.ViewHolder(itemView),  View.OnC
         var simpleNoteEditionIntent = Intent(view.context, NoteCreation::class.java)
         simpleNoteEditionIntent.putExtra("title", title.text)
         simpleNoteEditionIntent.putExtra("content", content.text)
-        simpleNoteEditionIntent.putExtra("tags", tags?.text)
+        simpleNoteEditionIntent.putExtra("tags", tags.text)
         //simpleNoteEditionIntent.putExtra("color", color)
         simpleNoteEditionIntent.putExtra("creationDate", creationDate)
         simpleNoteEditionIntent.putExtra("position", getPosition())

@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var staggeredList: List<ItemObjects>
     lateinit var rcAdapter: RecycleViewAdapter
+    //lateinit var rcAdapter: TitleSortAdapter
 
     lateinit var listViewItems: MutableList<ItemObjects>
     lateinit var recyclerView: RecyclerView
@@ -87,23 +88,30 @@ class MainActivity : AppCompatActivity() {
         recyclerView.getRecycledViewPool().setMaxRecycledViews(0, 0)
 
         val scale = resources.displayMetrics.density
-        val spacing = (1 * scale + 0.5f).toInt()
+        val spacing = (5 * scale + 0.5f).toInt()
         recyclerView.addItemDecoration(GridSpacingItemDecoration(spacing))
 
         // Load notes from internal storage
         staggeredList = loadNotes()
+        staggeredList = staggeredList.sortedWith(compareBy({ it.getTitle() }))//.sortedBy { it  }
 
 
-        //rcAdapter = RecyclerViewAdapter(staggeredList)
+        //rcAdapter = RecycleViewAdapter(staggeredList)
         //lateinit var rcAdapter: RecycleViewAdapter
         rcAdapter = RecycleViewAdapter(staggeredList)
+
+        //recyclerView.adapter = rcAdapter
+
+        //rcAdapter = TitleSortAdapter(staggeredList)
         recyclerView.adapter = rcAdapter
+
 
         // Drag and drop
         lateinit var ith : ItemTouchHelper
         //val ith = ItemTouchHelper(_ithCallback)
         ith = ItemTouchHelper(_ithCallback)
         ith.attachToRecyclerView(recyclerView)
+        //rcAdapter.addAll(staggeredList)
 
         // Create a simple note button click listener
 
@@ -155,7 +163,6 @@ class MainActivity : AppCompatActivity() {
                         ItemObjects(
                             noteTitle,
                             noteContent,
-                            //noteColor,
                             noteLastUpdateDate,
                             noteCreationDate,
                             noteTags
@@ -167,7 +174,6 @@ class MainActivity : AppCompatActivity() {
                         ItemObjects(
                             noteTitle,
                             noteContent,
-                            //noteColor,
                             noteLastUpdateDate,
                             noteCreationDate,
                             noteTags
@@ -325,238 +331,6 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    /*@SuppressLint("ResourceType")
-    private fun getListItemData(): List<ItemObjects> {
-
-        listViewItems = ArrayList()
-
-        listViewItems.add(
-            ItemObjects(
-                "",
-                "Cat cat cat cat",
-                resources.getString(R.color.colorNoteRed)
-            )
-        )
-        listViewItems.add(
-            ItemObjects(
-                "Lorem",
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nullapariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                resources.getString(R.color.colorNoteOrange)
-            )
-        )
-        listViewItems.add(
-            ItemObjects(
-                "",
-                "Length length length length",
-                resources.getString(R.color.colorNoteYellow)
-            )
-        )
-        listViewItems.add(
-            ItemObjects(
-                "",
-                "String string string string",
-                resources.getString(R.color.colorNoteGreen)
-            )
-        )
-        listViewItems.add(
-            ItemObjects(
-                "",
-                "Content content content content",
-                resources.getString(R.color.colorNoteCyan)
-            )
-        )
-        listViewItems.add(
-            ItemObjects(
-                "",
-                "Size size size size size size size size size size size",
-                resources.getString(R.color.colorNoteLightBlue)
-            )
-        )
-        listViewItems.add(
-            ItemObjects(
-                "",
-                "Char char char char char char char",
-                resources.getString(R.color.colorNoteDarkBlue)
-            )
-        )
-        listViewItems.add(
-            ItemObjects(
-                "",
-                "Dog dog dog dog dog dog",
-                resources.getString(R.color.colorNotePurple)
-            )
-        )
-        listViewItems.add(
-            ItemObjects(
-                "",
-                "Int hold dog cat hold hold hold cat hold hold dog hold int hold hold hold hold hold",
-                resources.getString(R.color.colorNotePink)
-            )
-        )
-
-        listViewItems.add(
-            ItemObjects(
-                "",
-                "test test test test test test",
-                resources.getString(R.color.colorNoteRed)
-            )
-        )
-        listViewItems.add(
-            ItemObjects(
-                "Lorem",
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nullapariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                resources.getString(R.color.colorNoteOrange)
-            )
-        )
-        /*listViewItems.add(
-            ItemObjects(
-                "Alkane",
-                "Hello Markdown",
-                R.drawable.one,
-                resources.getString(R.color.colorNoteYellow)
-            )
-        )*/
-        listViewItems.add(
-            ItemObjects(
-                "Ethane",
-                "Hello Markdown",
-                resources.getString(R.color.colorNoteGreen)
-            )
-        )
-        /*listViewItems.add(
-            ItemObjects(
-                "Alkyne",
-                "Hello Markdown",
-                R.drawable.three,
-                resources.getString(R.color.colorNoteCyan)
-            )
-        )
-        listViewItems.add(
-            ItemObjects(
-                "Benzene",
-                "Hello Markdown",
-                R.drawable.four,
-                resources.getString(R.color.colorNoteLightBlue)
-            )
-        )
-        listViewItems.add(
-            ItemObjects(
-                "Amide",
-                "Hello Markdown",
-                R.drawable.one,
-                resources.getString(R.color.colorNoteDarkBlue)
-            )
-        )
-        listViewItems.add(
-            ItemObjects(
-                "Amino Acid",
-                "Hello Markdown",
-                R.drawable.two,
-                resources.getString(R.color.colorNotePurple)
-            )
-        )
-        listViewItems.add(
-            ItemObjects(
-                "Phenol",
-                "Hello Markdown",
-                resources.getString(R.color.colorNotePink)
-            )
-        )
-        listViewItems.add(
-            ItemObjects(
-                "Carbonxylic",
-                "Hello Markdown",
-                R.drawable.four,
-                resources.getString(R.color.colorNoteRed)
-            )
-        )
-        listViewItems.add(
-            ItemObjects(
-                "Nitril",
-                "Hello Markdown",
-                R.drawable.one,
-                resources.getString(R.color.colorNoteOrange)
-            )
-        )
-        listViewItems.add(
-            ItemObjects(
-                "Ether",
-                "Hello Markdown",
-                R.drawable.two,
-                resources.getString(R.color.colorNoteYellow)
-            )
-        )
-        listViewItems.add(
-            ItemObjects(
-                "Ester",
-                "Hello Markdown",
-                R.drawable.three,
-                resources.getString(R.color.colorNoteGreen)
-            )
-        )*/
-        listViewItems.add(
-            ItemObjects(
-                "Alcohol",
-                "Hello Markdown",
-                resources.getString(R.color.colorNoteCyan)
-            )
-        )
-        listViewItems.add(
-            ItemObjects(
-                "Title only",
-                "",
-                resources.getString(R.color.colorNoteLightBlue)
-            )
-        )
-        listViewItems.add(
-            ItemObjects(
-                "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-                "",
-                resources.getString(R.color.colorNoteDarkBlue)
-            )
-        )
-        listViewItems.add(
-            ItemObjects(
-                "",
-                "Content only",
-                resources.getString(R.color.colorNotePurple)
-            )
-        )
-        listViewItems.add(ItemObjects("", "Kkk", resources.getString(R.color.colorNotePink)))
-        listViewItems.add(ItemObjects("", "Kkkkkk", resources.getString(R.color.colorNoteRed)))
-        listViewItems.add(
-            ItemObjects(
-                "",
-                "Kkkkkkkkkk",
-                resources.getString(R.color.colorNoteOrange)
-            )
-        )
-        listViewItems.add(
-            ItemObjects(
-                "",
-                "Kkkkkkkkkkkkk",
-                resources.getString(R.color.colorNoteYellow)
-            )
-        )
-        listViewItems.add(
-            ItemObjects(
-                "",
-                "Kkkkkkkkkkkkkkkkkkk",
-                resources.getString(R.color.colorNoteGreen)
-            )
-        )
-        listViewItems.add(
-            ItemObjects(
-                "",
-                "Kkkkkkkkkkkkkkkkkkkkkkkk",
-                resources.getString(R.color.colorNoteCyan)
-            )
-        )
-
-        return listViewItems
-    }*/
-
-
     // Save notes to internal storage
     fun saveNote(note: String, noteCreationDate: String) {
 
@@ -572,5 +346,81 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+    fun onReload(v: View) {
+        val intent = intent
+        finish()
+        startActivity(intent)
+    }
+
+
+    class ComparatorOne: Comparator<ItemObjects>{
+        override fun compare(o1: ItemObjects?, o2: ItemObjects?): Int {
+            if(o1 == null || o2 == null){
+                return 0;
+            }
+            return o1.getTitle()!!.compareTo(o2.getTitle()!!);
+        }
+    }
+
+    fun sortByTitle(view: View)
+    {
+        staggeredList = loadNotes()
+        staggeredList = staggeredList.sortedWith(compareBy({ it.getTitle() }))//.sortedBy { it  }
+        rcAdapter = RecycleViewAdapter(staggeredList)
+
+        recyclerView.adapter = rcAdapter
+
+        // Drag and drop
+        lateinit var ith : ItemTouchHelper
+        //val ith = ItemTouchHelper(_ithCallback)
+        ith = ItemTouchHelper(_ithCallback)
+        ith.attachToRecyclerView(recyclerView)
+        //rcAdapter.addAll(staggeredList)
+
+        // Create a simple note button click listener
+        createSimpleNoteButton = findViewById(R.id.create_new_note1)
+        createSimpleNoteButton.setOnClickListener(View.OnClickListener {
+            val simpleNoteIntent = Intent(applicationContext, NoteCreation::class.java)
+            simpleNoteIntent.putExtra("title", "")
+            simpleNoteIntent.putExtra("content", "")
+            //simpleNoteIntent.putExtra("color", resources.getString(R.color.colorNoteDefault))
+            simpleNoteIntent.putExtra("creationDate", "")
+            simpleNoteIntent.putExtra("tags", "")
+            simpleNoteIntent.putExtra("position", -1)
+            // TODO
+            startActivityForResult(simpleNoteIntent, 1)
+        })
+    }
+
+    fun sortByDate(view: View)
+    {
+        staggeredList = loadNotes()
+        staggeredList = staggeredList.sortedWith(compareBy({ it.getCreationDate() }))//.sortedBy { it  }
+        rcAdapter = RecycleViewAdapter(staggeredList)
+
+        recyclerView.adapter = rcAdapter
+
+        // Drag and drop
+        lateinit var ith : ItemTouchHelper
+        //val ith = ItemTouchHelper(_ithCallback)
+        ith = ItemTouchHelper(_ithCallback)
+        ith.attachToRecyclerView(recyclerView)
+        //rcAdapter.addAll(staggeredList)
+
+        // Create a simple note button click listener
+        createSimpleNoteButton = findViewById(R.id.create_new_note1)
+        createSimpleNoteButton.setOnClickListener(View.OnClickListener {
+            val simpleNoteIntent = Intent(applicationContext, NoteCreation::class.java)
+            simpleNoteIntent.putExtra("title", "")
+            simpleNoteIntent.putExtra("content", "")
+            //simpleNoteIntent.putExtra("color", resources.getString(R.color.colorNoteDefault))
+            simpleNoteIntent.putExtra("creationDate", "")
+            simpleNoteIntent.putExtra("tags", "")
+            simpleNoteIntent.putExtra("position", -1)
+            // TODO
+            startActivityForResult(simpleNoteIntent, 1)
+        })
+    }
 
 }
