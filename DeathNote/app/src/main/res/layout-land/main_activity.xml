@@ -68,12 +68,13 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:background="@color/EDE7F6"
+                android:background="#00BCD4"
                 android:ems="10"
-
+                android:visibility="invisible"
                 android:inputType="textPersonName"
                 android:maxLength="12"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                />
 
             <ImageButton
                 android:id="@+id/find_tag_button"
@@ -85,8 +86,8 @@
                 android:text="@string/sort_by_title"
                 android:textAlignment="textStart"
                 android:textAllCaps="false"
+                android:visibility="invisible"
                 android:textColor="@color/colorNoteCyan" />
-
             <Button
                 android:id="@+id/create_new_note1"
                 android:layout_width="40dp"
@@ -97,38 +98,8 @@
                 android:textAllCaps="false"
                 android:textColor="@color/colorHint" />
 
-            <ImageButton
-                android:id="@+id/sort_by_title"
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="10dp"
-                android:background="@drawable/ic_icon_list"
-                android:onClick="sortByTitle"
-                android:text="@string/sort_by_title"
-                android:textAlignment="textStart"
-                android:textAllCaps="false"
-                android:textColor="@color/colorNoteCyan" />
-
-            <ImageButton
-                android:id="@+id/sort_by_date"
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="10dp"
-                android:background="@drawable/date"
-                android:onClick="sortByDate"
-                android:text="@string/sort_by_date"
-                android:textAlignment="textStart"
-                android:textAllCaps="false"
-                android:textColor="@color/colorNoteCyan" />
-
-
-
-
         </TableRow>
 
     </TableLayout>
-
-
-
 
 </RelativeLayout>

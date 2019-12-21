@@ -35,7 +35,6 @@ class ViewHolders(itemView: View) : RecyclerView.ViewHolder(itemView),  View.OnC
         simpleNoteEditionIntent.putExtra("title", title.text)
         simpleNoteEditionIntent.putExtra("content", content.text)
         simpleNoteEditionIntent.putExtra("tags", tags.text)
-        //simpleNoteEditionIntent.putExtra("color", color)
         simpleNoteEditionIntent.putExtra("creationDate", creationDate)
         simpleNoteEditionIntent.putExtra("position", getPosition())
         (view.context as Activity).startActivityForResult(simpleNoteEditionIntent, 1)

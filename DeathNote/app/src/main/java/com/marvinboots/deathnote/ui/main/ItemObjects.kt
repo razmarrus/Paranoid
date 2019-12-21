@@ -16,7 +16,7 @@ class ItemObjects(title: String?, content: String?) {
 
     init{//(title: String, content: String, color: String): ??? {
         _content = content
-        if (title == null || title == "")
+        if ((title == null || title == "") && (content!= null || content != ""))
             _title = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())//creationDate
         else
             _title = title
@@ -52,14 +52,6 @@ class ItemObjects(title: String?, content: String?) {
     internal fun getTags(): String? {
         return _tags
     }
-
-    /*internal fun getColor(): String? {
-        return _color
-    }
-
-    internal fun getImage(): Int {
-        return _image
-    }*/
 
     internal fun getLastUpdateDate(): String? {
         return _lastUpdateDate

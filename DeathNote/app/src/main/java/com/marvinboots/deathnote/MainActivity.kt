@@ -1,7 +1,6 @@
 package com.marvinboots.deathnote
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -14,37 +13,32 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 
-
 import android.view.View
 import android.widget.Button
-
 import android.content.Context
+import android.widget.EditText
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.marvinboots.deathnote.ui.main.GridSpacingItemDecoration
 import com.marvinboots.deathnote.ui.main.ItemObjects
 
 import org.json.JSONException
 import org.json.JSONObject
+import java.io.*
 
-import java.io.BufferedReader
-import java.io.FileInputStream
-import java.io.FileNotFoundException
-import java.io.FileOutputStream
-import java.io.IOException
-import java.io.InputStreamReader
 import java.util.ArrayList
 import java.util.Collections
+import java.io.IOException;
 
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var staggeredList: List<ItemObjects>
     lateinit var rcAdapter: RecycleViewAdapter
-    //lateinit var rcAdapter: TitleSortAdapter
-
     lateinit var listViewItems: MutableList<ItemObjects>
     lateinit var recyclerView: RecyclerView
     lateinit var createSimpleNoteButton : Button
+    lateinit var tagEditText: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,8 +61,9 @@ class MainActivity : AppCompatActivity() {
                     1
                 )
         }
-
-
+//96 64 32 48
+        tagEditText   = findViewById(R.id.tag_input)
+        tagEditText.setHint("input tags");
         recyclerView = findViewById(R.id.recycler_view)
         recyclerView.setHasFixedSize(true)
 
@@ -95,37 +90,24 @@ class MainActivity : AppCompatActivity() {
         staggeredList = loadNotes()
         staggeredList = staggeredList.sortedWith(compareBy({ it.getTitle() }))//.sortedBy { it  }
 
-
-        //rcAdapter = RecycleViewAdapter(staggeredList)
-        //lateinit var rcAdapter: RecycleViewAdapter
         rcAdapter = RecycleViewAdapter(staggeredList)
-
-        //recyclerView.adapter = rcAdapter
-
-        //rcAdapter = TitleSortAdapter(staggeredList)
         recyclerView.adapter = rcAdapter
 
 
         // Drag and drop
         lateinit var ith : ItemTouchHelper
-        //val ith = ItemTouchHelper(_ithCallback)
         ith = ItemTouchHelper(_ithCallback)
         ith.attachToRecyclerView(recyclerView)
-        //rcAdapter.addAll(staggeredList)
 
         // Create a simple note button click listener
-
-
         createSimpleNoteButton = findViewById(R.id.create_new_note1)
         createSimpleNoteButton.setOnClickListener(View.OnClickListener {
             val simpleNoteIntent = Intent(applicationContext, NoteCreation::class.java)
             simpleNoteIntent.putExtra("title", "")
             simpleNoteIntent.putExtra("content", "")
-            //simpleNoteIntent.putExtra("color", resources.getString(R.color.colorNoteDefault))
             simpleNoteIntent.putExtra("creationDate", "")
             simpleNoteIntent.putExtra("tags", "")
             simpleNoteIntent.putExtra("position", -1)
-            // TODO
             startActivityForResult(simpleNoteIntent, 1)
         })
     }
@@ -142,17 +124,10 @@ class MainActivity : AppCompatActivity() {
 
                 val noteTitle = json.getString("noteTitle")
                 val noteContent = json.getString("noteContent")
-                //val noteColor = json.getString("noteColor")
                 val noteLastUpdateDate = json.getString("noteLastUpdateDate")
                 val noteCreationDate = json.getString("noteCreationDate")
                 val notePosition = json.getInt("notePosition")
-
                 val noteTags = json.getString("noteTags")
-                /*val JSONnoteTags = json.getJSONArray("tags")
-
-                var noteTags = List(JSONnoteTags.length()) {
-                    JSONnoteTags.getString(it)*/
-                //}
 
                 saveNote(noteJSON, noteCreationDate)
 
@@ -193,27 +168,42 @@ class MainActivity : AppCompatActivity() {
         override fun onMove(
             recyclerView: RecyclerView,
             viewHolder: RecyclerView.ViewHolder,
-            target: RecyclerView.ViewHolder
-        ): Boolean {
+            target: RecyclerView.ViewHolder): Boolean {
 
             Collections.swap(staggeredList, viewHolder.adapterPosition, target.adapterPosition)
             rcAdapter.notifyItemMoved(viewHolder.adapterPosition, target.adapterPosition)
+            /*Toast.makeText(this@MainActivity, staggeredList.get(target.adapterPosition).getTitle(), Toast.LENGTH_LONG).show()
+
+            val noteJSON = JSONObject()
+            JSONObject().remove(staggeredList.get(viewHolder.adapterPosition).getTitle())//getAsJsonObject("accounts").
+
+            noteJSON.remove(staggeredList.get(viewHolder.adapterPosition).getTitle())
+            noteJSON.remove(staggeredList.get(viewHolder.adapterPosition).getCreationDate())
+            noteJSON.remove(staggeredList.get(viewHolder.adapterPosition).getLastUpdateDate())
+            noteJSON.remove(staggeredList.get(viewHolder.adapterPosition).getContent())
+            noteJSON.remove(staggeredList.get(viewHolder.adapterPosition).getTags())
+            */
+
+            //Toast.makeText(this@MainActivity, "Deleted", Toast.LENGTH_LONG).show()
+
             return true
         }
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-            //TODO
+            //Toast.makeText(this@MainActivity, "Test", Toast.LENGTH_LONG).show()
         }
 
         // Defines the enabled move directions in each state (idle, swiping, dragging).
         override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
-
+            Toast.makeText(this@MainActivity, "Move to delete", Toast.LENGTH_LONG).show()
             return makeFlag(
                 ItemTouchHelper.ACTION_STATE_DRAG,
                 ItemTouchHelper.DOWN or ItemTouchHelper.UP or ItemTouchHelper.START or ItemTouchHelper.END
+
             )
         }
     }
+
 
     private fun loadNotes(): kotlin.collections.List<ItemObjects> {
 
@@ -287,11 +277,6 @@ class MainActivity : AppCompatActivity() {
                 if (json != null)
                 {
                     noteTags = json.getString("noteTags")
-                    /*var JSONnoteTag = json.getJSONArray("noteTags")//("tag1")
-
-                    noteTags = List(JSONnoteTag.length()) {
-                        JSONnoteTag.getString(it)
-                    }*/
                 }
             } catch (e: JSONException) {
                 e.printStackTrace()
@@ -330,6 +315,24 @@ class MainActivity : AppCompatActivity() {
         return listViewItems
     }
 
+    fun itemTouchHelperFun()
+    {
+        lateinit var ith : ItemTouchHelper
+        ith = ItemTouchHelper(_ithCallback)
+        ith.attachToRecyclerView(recyclerView)
+
+        createSimpleNoteButton = findViewById(R.id.create_new_note1)
+        createSimpleNoteButton.setOnClickListener(View.OnClickListener {
+            val simpleNoteIntent = Intent(applicationContext, NoteCreation::class.java)
+            simpleNoteIntent.putExtra("title", "")
+            simpleNoteIntent.putExtra("content", "")
+            simpleNoteIntent.putExtra("creationDate", "")
+            simpleNoteIntent.putExtra("tags", "")
+            simpleNoteIntent.putExtra("position", -1)
+            startActivityForResult(simpleNoteIntent, 1)
+        })
+    }
+
 
     // Save notes to internal storage
     fun saveNote(note: String, noteCreationDate: String) {
@@ -347,50 +350,15 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    fun onReload(v: View) {
-        val intent = intent
-        finish()
-        startActivity(intent)
-    }
-
-
-    class ComparatorOne: Comparator<ItemObjects>{
-        override fun compare(o1: ItemObjects?, o2: ItemObjects?): Int {
-            if(o1 == null || o2 == null){
-                return 0;
-            }
-            return o1.getTitle()!!.compareTo(o2.getTitle()!!);
-        }
-    }
-
     fun sortByTitle(view: View)
     {
         staggeredList = loadNotes()
         staggeredList = staggeredList.sortedWith(compareBy({ it.getTitle() }))//.sortedBy { it  }
         rcAdapter = RecycleViewAdapter(staggeredList)
-
         recyclerView.adapter = rcAdapter
 
         // Drag and drop
-        lateinit var ith : ItemTouchHelper
-        //val ith = ItemTouchHelper(_ithCallback)
-        ith = ItemTouchHelper(_ithCallback)
-        ith.attachToRecyclerView(recyclerView)
-        //rcAdapter.addAll(staggeredList)
-
-        // Create a simple note button click listener
-        createSimpleNoteButton = findViewById(R.id.create_new_note1)
-        createSimpleNoteButton.setOnClickListener(View.OnClickListener {
-            val simpleNoteIntent = Intent(applicationContext, NoteCreation::class.java)
-            simpleNoteIntent.putExtra("title", "")
-            simpleNoteIntent.putExtra("content", "")
-            //simpleNoteIntent.putExtra("color", resources.getString(R.color.colorNoteDefault))
-            simpleNoteIntent.putExtra("creationDate", "")
-            simpleNoteIntent.putExtra("tags", "")
-            simpleNoteIntent.putExtra("position", -1)
-            // TODO
-            startActivityForResult(simpleNoteIntent, 1)
-        })
+        itemTouchHelperFun()
     }
 
     fun sortByDate(view: View)
@@ -398,29 +366,61 @@ class MainActivity : AppCompatActivity() {
         staggeredList = loadNotes()
         staggeredList = staggeredList.sortedWith(compareBy({ it.getCreationDate() }))//.sortedBy { it  }
         rcAdapter = RecycleViewAdapter(staggeredList)
+        recyclerView.adapter = rcAdapter
+
+        itemTouchHelperFun()
+    }
+
+    fun searchByTag (view: View)
+    {
+        staggeredList = loadNotes()
+
+        var tagsString = tagEditText.getText().toString()
+        tagsString = tagsString.toLowerCase()
+        val inputTagList: List<String> = tagsString.split(" ").map { it.trim() }
+        var taggedNotes: MutableList<ItemObjects> = mutableListOf<ItemObjects>()//MutableList<ItemObjects>()
+
+        for(note in staggeredList)
+        {
+            if(note.getTags() != null) {
+                val tagList: List<String> = note.getTags()!!.split(" ").map { it.trim() }
+                for(tag in tagList)
+                {
+                    if(inputTagList.contains(tag.toLowerCase()))
+                    {
+                        taggedNotes.add(note)
+                    }
+                }
+            }
+        }
+        rcAdapter = RecycleViewAdapter(taggedNotes)
+        recyclerView.adapter = rcAdapter
+        // Drag and drop
+        itemTouchHelperFun()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (resources.configuration.orientation == 2) {//==={
+            var column = 3
+            val staggeredGridLayoutManager = StaggeredGridLayoutManager(column, 1)
+            recyclerView.setLayoutManager(staggeredGridLayoutManager)
+        }
+        else
+        {
+            val linearLayoutManager = LinearLayoutManager(this)
+            recyclerView.setLayoutManager(linearLayoutManager)
+        }
+        // Prevent the loss of items
+        recyclerView.getRecycledViewPool().setMaxRecycledViews(0, 0)
+        staggeredList = loadNotes()
+        staggeredList = staggeredList.sortedWith(compareBy({ it.getTitle() }))//.sortedBy { it  }
+        rcAdapter = RecycleViewAdapter(staggeredList)
 
         recyclerView.adapter = rcAdapter
 
         // Drag and drop
-        lateinit var ith : ItemTouchHelper
-        //val ith = ItemTouchHelper(_ithCallback)
-        ith = ItemTouchHelper(_ithCallback)
-        ith.attachToRecyclerView(recyclerView)
-        //rcAdapter.addAll(staggeredList)
-
-        // Create a simple note button click listener
-        createSimpleNoteButton = findViewById(R.id.create_new_note1)
-        createSimpleNoteButton.setOnClickListener(View.OnClickListener {
-            val simpleNoteIntent = Intent(applicationContext, NoteCreation::class.java)
-            simpleNoteIntent.putExtra("title", "")
-            simpleNoteIntent.putExtra("content", "")
-            //simpleNoteIntent.putExtra("color", resources.getString(R.color.colorNoteDefault))
-            simpleNoteIntent.putExtra("creationDate", "")
-            simpleNoteIntent.putExtra("tags", "")
-            simpleNoteIntent.putExtra("position", -1)
-            // TODO
-            startActivityForResult(simpleNoteIntent, 1)
-        })
+        itemTouchHelperFun()
     }
 
 }

@@ -50,7 +50,7 @@
             android:id="@+id/content_edit_text"
             android:layout_width="match_parent"
             android:layout_height="522dp"
-            android:background="@color/colorNoteGreen"
+            android:background="@color/colorNoteDefault"
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:focusedByDefault="false"
