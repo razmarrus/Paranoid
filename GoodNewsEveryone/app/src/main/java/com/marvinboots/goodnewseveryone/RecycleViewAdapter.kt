@@ -30,8 +30,8 @@ class RecycleViewAdapter( context: Context,  dataset : ArrayList<HashMap<String,
         var tv_description: TextView
         var tv_date: TextView
         var iv_image: ImageView
-        var iv_fav: ImageView
-        var iv_share: ImageView
+        //var iv_fav: ImageView
+        //var iv_share: ImageView
         var cardView: CardView
 
 
@@ -42,8 +42,8 @@ class RecycleViewAdapter( context: Context,  dataset : ArrayList<HashMap<String,
             tv_date = v.findViewById(R.id.date) as TextView
 
             iv_image = v.findViewById(R.id.image) as ImageView
-            iv_fav = v.findViewById(R.id.fav) as ImageView
-            iv_share = v.findViewById(R.id.share) as ImageView
+           // iv_fav = v.findViewById(R.id.fav) as ImageView
+            //iv_share = v.findViewById(R.id.share) as ImageView
 
             cardView = v.findViewById(R.id.card_view) as CardView
 
@@ -65,14 +65,6 @@ class RecycleViewAdapter( context: Context,  dataset : ArrayList<HashMap<String,
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // position should never be final
 
-        /*val animation = AnimationUtils.loadAnimation(
-            mContext,
-            if (position > lastPosition)
-                R.anim.up_from_bottom
-            else
-                R.anim.down_from_top
-        )
-        holder.itemView.startAnimation(animation)*/
         lastPosition = position
 
         val map = mDataset[position]
@@ -98,9 +90,9 @@ class RecycleViewAdapter( context: Context,  dataset : ArrayList<HashMap<String,
 
         holder.cardView.setOnClickListener(onCardClick(holder.getAdapterPosition()))
 
-        holder.iv_share.setOnClickListener(onPostShare(holder.getAdapterPosition()))
+        //holder.iv_share.setOnClickListener(onPostShare(holder.getAdapterPosition()))
 
-        holder.iv_fav.setOnClickListener(onAddfav(holder.getAdapterPosition()))
+        //holder.iv_fav.setOnClickListener(onAddfav(holder.getAdapterPosition()))
 
     }
 
@@ -109,7 +101,8 @@ class RecycleViewAdapter( context: Context,  dataset : ArrayList<HashMap<String,
 
         override fun onClick(view: View) {
             val map = mDataset[position]
-            Log.d("Position", map["origLink"])
+            println(map["origLink"])
+            Log.d("Position", map["origLink"]!!)
             val uri = Uri.parse(map["origLink"])
             val intent = Intent(Intent.ACTION_VIEW, uri)
             mContext.startActivity(intent)
