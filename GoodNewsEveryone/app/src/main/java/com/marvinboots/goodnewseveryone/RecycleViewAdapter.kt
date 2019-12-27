@@ -70,10 +70,10 @@ class RecycleViewAdapter( context: Context,  dataset : ArrayList<HashMap<String,
         val map = mDataset[position]
 
         val imageurl = map["imageUrl"]
-
+        println("\n\nImageUrl" + imageurl)
         Picasso.get()//with(mContext)
             .load(imageurl)
-            .placeholder(R.mipmap.placeholde)
+            .placeholder(R.mipmap.whatastory)
             .resize(dpToPx(128), dpToPx(128))
             .centerInside()
             .error(R.mipmap.placeholde)

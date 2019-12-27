@@ -24,6 +24,7 @@ class GetRSS : AppCompatActivity() {
         urlLinkEditText = findViewById(R.id.urlEditText)
         val editionIntent = intent
         var lastUrl = editionIntent.getStringExtra("Url")
+        println(lastUrl)
         urlLinkEditText.setText(lastUrl)//text = lastUrl
 
     }
@@ -37,20 +38,16 @@ class GetRSS : AppCompatActivity() {
 
     fun GoHome(view: View)
     {
-
-        /*val myIntent = Intent(this@GetRSS, MainActivity::class.java)
+        feedUrl = urlLinkEditText.getText().toString()
+        val myIntent = Intent(this@GetRSS, MainActivity::class.java)
         myIntent.putExtra("Url", feedUrl)
-        startActivity(intent)*/
-; //Optional parameters
-        //CurrentActivity.this.startActivity(myIntent);
+        startActivity(myIntent)
     }
 
     fun GoDashboard(view: View)
     {
 
-        val myIntent = Intent(this@GetRSS, MainActivity::class.java)
-        myIntent.putExtra("Url", feedUrl)
-        startActivity(intent)
+
         ; //Optional parameters
         //CurrentActivity.this.startActivity(myIntent);
     }
