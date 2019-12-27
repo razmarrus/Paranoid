@@ -88,4 +88,6 @@ public class NewsItem {
     public String getNewsOrigLink() {
         return newsOrigLink;
     }
+
+
 }

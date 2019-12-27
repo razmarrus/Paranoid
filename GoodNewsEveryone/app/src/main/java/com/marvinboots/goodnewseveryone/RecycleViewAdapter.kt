@@ -55,6 +55,7 @@ class RecycleViewAdapter( context: Context,  dataset : ArrayList<HashMap<String,
         mDataset = dataset
     }
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecycleViewAdapter.ViewHolder {
         val v = LayoutInflater.from(parent.context)
             .inflate(R.layout.listitem, parent, false)

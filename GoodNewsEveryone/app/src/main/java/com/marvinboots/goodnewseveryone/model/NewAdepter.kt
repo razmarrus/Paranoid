@@ -67,32 +67,33 @@ class NewAdapter( context: Context,  dataset : ArrayList<NewsItem>) : RecyclerVi
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // position should never be final
+        //val newsItem = getNewsItem(position)
+        if(mDataset!![position] != null) {
+            lastPosition = position
+            var newsItem = mDataset!![position]// : NewsItem
+            //val map = mDataset[position]
 
-        lastPosition = position
-        var newsItem = mDataset!![position]// : NewsItem
-        //val map = mDataset[position]
+            val imageurl = newsItem.getNewsItemImage()
+            println("\n\nImageUrl" + imageurl)
+            Picasso.get()//with(mContext)
+                .load(imageurl)
+                .placeholder(R.mipmap.whatastory)
+                .resize(dpToPx(128), dpToPx(128))
+                .centerInside()
+                .error(R.mipmap.placeholde)
+                .into(holder.iv_image)
 
-        val imageurl = newsItem.getNewsItemImage()
-        println("\n\nImageUrl" + imageurl)
-        Picasso.get()//with(mContext)
-            .load(imageurl)
-            .placeholder(R.mipmap.whatastory)
-            .resize(dpToPx(128), dpToPx(128))
-            .centerInside()
-            .error(R.mipmap.placeholde)
-            .into(holder.iv_image)
+            holder.tv_title.text = newsItem.getNewsItemTitle()
 
-        holder.tv_title.text = newsItem.getNewsItemTitle()
+            val fromHtml = newsItem.newsItemDescription
+            val lastStr = fromHtml.substring(2, fromHtml.length - 1)
 
-        val fromHtml = newsItem.newsItemDescription
-        val lastStr = fromHtml.substring(2, fromHtml.length - 1)
-
-        holder.tv_description.text = lastStr.trim { it <= ' ' }
-        holder.tv_date.text = newsItem.newsItemPubDate
+            holder.tv_description.text = lastStr.trim { it <= ' ' }
+            holder.tv_date.text = newsItem.newsItemPubDate
 
 
-        holder.cardView.setOnClickListener(onCardClick(holder.getAdapterPosition()))
-
+            holder.cardView.setOnClickListener(onCardClick(holder.getAdapterPosition()))
+        }
         //holder.iv_share.setOnClickListener(onPostShare(holder.getAdapterPosition()))
 
         //holder.iv_fav.setOnClickListener(onAddfav(holder.getAdapterPosition()))
@@ -106,9 +107,16 @@ class NewAdapter( context: Context,  dataset : ArrayList<NewsItem>) : RecyclerVi
             var map = mDataset!![position]
             //println(map["origLink"])
             Log.d("Position", map.newsOrigLink)
+
             val uri = Uri.parse( map.newsOrigLink)
-            val intent = Intent(Intent.ACTION_VIEW, uri)
+            val intent = Intent("margo/Browser")
+            intent.setData(Uri.parse(uri.toString()))
             mContext.startActivity(intent)
+            //val uri = Uri.parse( map.newsOrigLink)
+
+
+            //val intent = Intent(Intent.ACTION_VIEW, uri)
+            //mContext.startActivity(intent)
         }
     }
 

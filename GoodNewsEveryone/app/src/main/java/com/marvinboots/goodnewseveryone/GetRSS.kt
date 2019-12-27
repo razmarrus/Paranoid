@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.ListView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 
@@ -29,12 +30,6 @@ class GetRSS : AppCompatActivity() {
 
     }
 
-    fun searchUrl (view: View)
-    {
-        feedUrl = urlLinkEditText.getText().toString()
-        //aa.notifyDataSetChanged();
-        //refressRssList();
-    }
 
     fun GoHome(view: View)
     {
@@ -44,19 +39,21 @@ class GetRSS : AppCompatActivity() {
         startActivity(myIntent)
     }
 
-    fun GoDashboard(view: View)
+    fun FirstLinkToEdit(view: View)
     {
-
-
-        ; //Optional parameters
-        //CurrentActivity.this.startActivity(myIntent);
+        var textView = findViewById(R.id.textView1) as TextView
+        urlLinkEditText.setText(textView.getText().toString())
     }
 
-    fun GoViewed(view: View)
+    fun SecondLinkToEdit(view: View)
     {
-        val myIntent = Intent(this@GetRSS, MainActivity::class.java)
-        myIntent.putExtra("Url", feedUrl)
-        startActivity(intent)
+        var textView = findViewById(R.id.textView2) as TextView
+        urlLinkEditText.setText(textView.getText().toString())
+    }
 
+    fun ThirdLinkToEdit(view: View)
+    {
+        var textView = findViewById(R.id.textView3) as TextView
+        urlLinkEditText.setText(textView.getText().toString())
     }
 }

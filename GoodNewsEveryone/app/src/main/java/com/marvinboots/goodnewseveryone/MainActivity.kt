@@ -19,6 +19,7 @@ import android.os.AsyncTask
 import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 //import android.support.design.widget.FloatingActionButton
 //import android.support.design.widget.Snackbar
@@ -39,13 +40,16 @@ import com.marvinboots.goodnewseveryone.db.NewsItemDao
 import com.marvinboots.goodnewseveryone.db.NewsItemsDB
 import com.marvinboots.goodnewseveryone.model.NewAdapter
 import com.marvinboots.goodnewseveryone.model.NewsItem
+import com.marvinboots.goodnewseveryone.utils.RssUtils
+import com.prof.rssparser.Article
+import com.prof.rssparser.Parser
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mRecyclerView: RecyclerView //? = null
-   // private lateinit var mAdapter: RecycleViewAdapter //? = null
-    private lateinit var nAdapter: NewAdapter
+    private lateinit var mAdapter: RecycleViewAdapter //? = null
+    //private lateinit var nAdapter: NewAdapter
     private val resultItems = ArrayList<HashMap<String, String>>()
     private var mFeedUrl = "https://www.nasa.gov/rss/dyn/breaking_news.rss"//"https://news.tut.by/rss.html"//"http://rss.cnn.com/rss/edition.rss"//"http://feeds.feedburner.com/techcrunch/android?format=xml"
     private lateinit var progressDialog: ProgressBar //= null
@@ -54,7 +58,7 @@ class MainActivity : AppCompatActivity() {
     private var dao: NewsItemDao? = null
     //private var newsItems: ArrayList<NewsItem>()//? = null
     private var newsItems = arrayListOf<NewsItem>()
-
+    private val articleListLive = MutableLiveData<List<Article>>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,29 +89,32 @@ class MainActivity : AppCompatActivity() {
         mRecyclerView.setLayoutManager(mLayoutManager)
         networkImageView = findViewById(R.id.NetImage)
 
-
-        nAdapter = NewAdapter(this, newsItems)
-        mRecyclerView.setAdapter(nAdapter)
+        mAdapter = RecycleViewAdapter(this, resultItems)
+        mRecyclerView.setAdapter(mAdapter)
+        //nAdapter = NewAdapter(this, newsItems)
+        //mRecyclerView.setAdapter(nAdapter)
 
 
         //mAdapter = RecycleViewAdapter(this, resultItems)
         //mRecyclerView.setAdapter(mAdapter)
-        dao = NewsItemsDB.getInstance(this).newsItemDao()
-        if(checkNetWorkState())
-        {
-            for (newsItem in dao!!.getNewsItems()) {
-                dao!!.deleteNewsItem(newsItem)
-            }
-            /*for (article in articles) {
-                dao!!.insertNewsItem(RssUtils.articleToNewsItem(article))
-            }*/
-            //loadNewsItems()
-            getDataFromWeb()
-        }
-
-        //getDataFromWeb()
+        //dao = NewsItemsDB.getInstance(this).newsItemDao()
+        /*articleListLive.observe(this,
+            Observer { articles ->
+                for (newsItem in dao!!.getNewsItems()) {
+                    dao!!.deleteNewsItem(newsItem)
+                }
+                for (article in articles) {
+                    dao!!.insertNewsItem(RssUtils.articleToNewsItem(article))
+                }
+                loadNewsItems()
+            })*/
+        //if (checkNetWorkState())
+            checkNetWorkState()
+            //parseArticles(mFeedUrl)
+        getDataFromWeb()
 
     }
+
 
     /*override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -127,6 +134,8 @@ class MainActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }*/
+
+
 
 
     inner class GetRssClass(internal var mUrl: String) :
@@ -170,21 +179,20 @@ class MainActivity : AppCompatActivity() {
             if (result == null) {
                 showToast("Please check your connection and try again.")
             } else {
-                val before = resultItems.size //newsItems!!.size//
+                val before = resultItems.size
                 resultItems.clear()
                 resultItems.addAll(result)
+                mAdapter.notifyItemRangeInserted(before, result.size)
+                mRecyclerView.invalidate()
 
-                //mAdapter.notifyItemRangeInserted(before, result.size)
-                //mRecyclerView.invalidate()
 
-
-                newsItems = ArrayList()
+                /*newsItems = ArrayList()
                 val list = dao!!.getNewsItems()
                 newsItems.addAll(list)
                 nAdapter.notifyItemRangeInserted(before, newsItems.size)
                 //nAdapter = NewAdapter(this, newsItems)//resultItems)
                 mRecyclerView.setAdapter(nAdapter)
-                mRecyclerView.invalidate()
+                mRecyclerView.invalidate()*/
             }
         }
 
@@ -229,7 +237,7 @@ class MainActivity : AppCompatActivity() {
                     if (currentChild.nodeName.equals("title", ignoreCase = true)) {
                         // Log.d("Title", String.valueOf(currentChild.getTextContent()));
                         currentMap["title"] = currentChild.textContent.toString()
-                        title =  currentMap["title"]!!
+                        //title =  currentMap["title"]!!
 
                         //newsItem.newsItemTitle("qwe")
                     }
@@ -237,26 +245,26 @@ class MainActivity : AppCompatActivity() {
                     if (currentChild.nodeName.equals("description", ignoreCase = true)) {
                         // Log.d("description", String.valueOf(currentChild.getTextContent()));
                         currentMap["description"] = currentChild.textContent.toString()
-                        description = currentMap["description"]!!
+                       //description = currentMap["description"]!!
                     }
 
                     if (currentChild.nodeName.equals("pubDate", ignoreCase = true)) {
                         // Log.d("Title", String.valueOf(currentChild.getTextContent()));
                         currentMap["pubDate"] = currentChild.textContent.toString()
-                        pDate = currentMap["pubDate"]!!
+                       // pDate = currentMap["pubDate"]!!
                     }
 
                     if (currentChild.nodeName.equals("feedburner:origLink", ignoreCase = true)) {
                         currentMap["origLink"] = currentChild.textContent
-                        origLinkString =   currentMap["origLink"]!!
+                        //origLinkString =   currentMap["origLink"]!!
                     }
                     else if (currentChild.nodeName.equals("origLink", ignoreCase = true)) {
                         currentMap["origLink"] = currentChild.textContent
-                        origLinkString =   currentMap["origLink"]!!
+                        //origLinkString =   currentMap["origLink"]!!
                     }
                     else if (currentChild.nodeName.equals("link", ignoreCase = true)) {
                         currentMap["origLink"] = currentChild.textContent
-                        origLinkString  = currentMap["imageUrl"]!!
+                        //origLinkString  = currentMap["imageUrl"]!!
                     }
 
                     if (currentChild.nodeName.equals("media:thumbnail", ignoreCase = true)) {
@@ -264,7 +272,7 @@ class MainActivity : AppCompatActivity() {
 
                         if (imgCount == 1) {
                             currentMap["imageUrl"] = currentChild.attributes.item(0).textContent
-                            imageUrlString = currentMap["imageUrl"]!!
+                            //imageUrlString = currentMap["imageUrl"]!!
                         }
                     }
                     else if (currentChild.nodeName.equals("media:content", ignoreCase = true)) {
@@ -272,7 +280,7 @@ class MainActivity : AppCompatActivity() {
 
                         if (imgCount == 1) {
                             currentMap["imageUrl"] = currentChild.attributes.item(0).textContent
-                            imageUrlString = currentMap["imageUrl"]!!
+                            //imageUrlString = currentMap["imageUrl"]!!
                         }
                     }
                     else if (currentChild.nodeName.equals("thumbnail", ignoreCase = true)) {
@@ -280,7 +288,7 @@ class MainActivity : AppCompatActivity() {
 
                         if (imgCount == 1) {
                             currentMap["imageUrl"] = currentChild.attributes.item(0).textContent
-                            imageUrlString = currentMap["imageUrl"]!!
+                            //imageUrlString = currentMap["imageUrl"]!!
                         }
                     }
                     else if (currentChild.nodeName.equals("enclosure", ignoreCase = true)) {
@@ -288,7 +296,7 @@ class MainActivity : AppCompatActivity() {
 
                         if (imgCount == 1) {
                             currentMap["imageUrl"] = currentChild.attributes.item(0).textContent
-                            imageUrlString = currentMap["imageUrl"]!!
+                            //imageUrlString = currentMap["imageUrl"]!!
                         }
                     }
                     /*if(getImage(currentChild.attributes.item(0).textContent) != null)
@@ -296,13 +304,13 @@ class MainActivity : AppCompatActivity() {
                         currentMap["imageUrl"] = currentChild.attributes.item(0).textContent//getImage(currentChild.attributes.item(0).textContent)
                     }*/
                     //dao!!.insertNewsItem(RssUtils.articleToNewsItem(article)
-                    if(title != "" && description != "" && origLinkString != "" &&  pDate != "" &&  imageUrlString != "") {
+                    /*if(title != "" && description != "" && origLinkString != "" &&  pDate != "" &&  imageUrlString != "") {
                         var newsItem =
                             NewsItem(title, description, pDate, origLinkString, imageUrlString)
 
                             dao!!.insertNewsItem(newsItem)
-                    }
-                    println("mewo")
+                    }*/
+                    //println("mewo")
                 }
                 if (currentMap != null && !currentMap.isEmpty()) {
                     items.add(currentMap)
@@ -355,11 +363,9 @@ class MainActivity : AppCompatActivity() {
 
     fun GoHome(view: View)
     {
-
         val myIntent = Intent(this@MainActivity, GetRSS::class.java)
         myIntent.putExtra("Url", mFeedUrl)
         startActivity(myIntent)
-
     }
 
     fun checkInternetStatusButton(view: View)
@@ -392,4 +398,10 @@ class MainActivity : AppCompatActivity() {
         return false
     }
 
+
+    /*fun onNewsItemClick(newsItem: NewsItem) {
+        val show = Intent(this, ShowNewsItemActivity::class.java)
+        show.putExtra(NOTE_EXTRA_Key, newsItem.id)
+        startActivity(show)
+    }*/
 }
