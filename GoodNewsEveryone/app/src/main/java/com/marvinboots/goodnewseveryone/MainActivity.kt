@@ -47,16 +47,15 @@ import com.prof.rssparser.Parser
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var mRecyclerView: RecyclerView //? = null
-    private lateinit var mAdapter: RecycleViewAdapter //? = null
+    private lateinit var mRecyclerView: RecyclerView
+    private lateinit var mAdapter: RecycleViewAdapter
     //private lateinit var nAdapter: NewAdapter
     private val resultItems = ArrayList<HashMap<String, String>>()
-    private var mFeedUrl = "https://www.nasa.gov/rss/dyn/breaking_news.rss"//"https://news.tut.by/rss.html"//"http://rss.cnn.com/rss/edition.rss"//"http://feeds.feedburner.com/techcrunch/android?format=xml"
-    private lateinit var progressDialog: ProgressBar //= null
+    private var mFeedUrl = "https://www.nasa.gov/rss/dyn/breaking_news.rss"
+    private lateinit var progressDialog: ProgressBar
     private var isLoading: Boolean = false
-    private lateinit var networkImageView : ImageView
-    private var dao: NewsItemDao? = null
-    //private var newsItems: ArrayList<NewsItem>()//? = null
+    private lateinit var networkImageView: ImageView
+    private lateinit var dao: NewsItemDao
     private var newsItems = arrayListOf<NewsItem>()
     private val articleListLive = MutableLiveData<List<Article>>()
 
@@ -79,10 +78,10 @@ class MainActivity : AppCompatActivity() {
                 mFeedUrl = editionIntent.getStringExtra("Url")!!
             }
             mRecyclerView = findViewById(R.id.recycler_view) as RecyclerView
-        }
-        catch (e: Exception) {
+        } catch (e: Exception) {
             // handler
-            mFeedUrl = "https://www.nasa.gov/rss/dyn/breaking_news.rss"//"https://www.cbc.ca/cmlink/rss-arts"
+            mFeedUrl =
+                "https://www.nasa.gov/rss/dyn/breaking_news.rss"//"https://www.cbc.ca/cmlink/rss-arts"
         }
         mRecyclerView = findViewById(R.id.recycler_view) as RecyclerView
         val mLayoutManager = LinearLayoutManager(this)
@@ -91,59 +90,27 @@ class MainActivity : AppCompatActivity() {
 
         mAdapter = RecycleViewAdapter(this, resultItems)
         mRecyclerView.setAdapter(mAdapter)
-        //nAdapter = NewAdapter(this, newsItems)
-        //mRecyclerView.setAdapter(nAdapter)
+
+        dao = NewsItemsDB.getInstance(this).newsItemDao()
 
 
-        //mAdapter = RecycleViewAdapter(this, resultItems)
-        //mRecyclerView.setAdapter(mAdapter)
-        //dao = NewsItemsDB.getInstance(this).newsItemDao()
-        /*articleListLive.observe(this,
-            Observer { articles ->
-                for (newsItem in dao!!.getNewsItems()) {
-                    dao!!.deleteNewsItem(newsItem)
-                }
-                for (article in articles) {
-                    dao!!.insertNewsItem(RssUtils.articleToNewsItem(article))
-                }
-                loadNewsItems()
-            })*/
-        //if (checkNetWorkState())
-            checkNetWorkState()
-            //parseArticles(mFeedUrl)
-        getDataFromWeb()
-
-    }
-
-
-    /*override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_scrolling, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
-        when (id) {
-            R.id.action_exit -> finish()
-            R.id.refresh -> if (!isLoading) {
-                getDataFromWeb()
-            } else {
-                showToast("Please wait..")
-            }
+        if (checkNetWorkState()) {
+            for (newsItem in dao.getNewsItems())
+                dao.deleteNewsItem(newsItem)
+            getDataFromWeb()
         }
-        return super.onOptionsItemSelected(item)
-    }*/
+        else
+            getDataFromRoom()
 
-
+    }
 
 
     inner class GetRssClass(internal var mUrl: String) :
-        AsyncTask<Void, Void, ArrayList<HashMap<String, String>>>()
-    {
-        init{
+        AsyncTask<Void, Void, ArrayList<HashMap<String, String>>>() {
+        init {
             mUrl = mFeedUrl
         }
+
         override fun onPreExecute() {
             super.onPreExecute()
             showProgressDialog()
@@ -185,14 +152,6 @@ class MainActivity : AppCompatActivity() {
                 mAdapter.notifyItemRangeInserted(before, result.size)
                 mRecyclerView.invalidate()
 
-
-                /*newsItems = ArrayList()
-                val list = dao!!.getNewsItems()
-                newsItems.addAll(list)
-                nAdapter.notifyItemRangeInserted(before, newsItems.size)
-                //nAdapter = NewAdapter(this, newsItems)//resultItems)
-                mRecyclerView.setAdapter(nAdapter)
-                mRecyclerView.invalidate()*/
             }
         }
 
@@ -237,7 +196,7 @@ class MainActivity : AppCompatActivity() {
                     if (currentChild.nodeName.equals("title", ignoreCase = true)) {
                         // Log.d("Title", String.valueOf(currentChild.getTextContent()));
                         currentMap["title"] = currentChild.textContent.toString()
-                        //title =  currentMap["title"]!!
+                        title = currentMap["title"]!!
 
                         //newsItem.newsItemTitle("qwe")
                     }
@@ -245,26 +204,24 @@ class MainActivity : AppCompatActivity() {
                     if (currentChild.nodeName.equals("description", ignoreCase = true)) {
                         // Log.d("description", String.valueOf(currentChild.getTextContent()));
                         currentMap["description"] = currentChild.textContent.toString()
-                       //description = currentMap["description"]!!
+                        description = currentMap["description"]!!
                     }
 
                     if (currentChild.nodeName.equals("pubDate", ignoreCase = true)) {
                         // Log.d("Title", String.valueOf(currentChild.getTextContent()));
                         currentMap["pubDate"] = currentChild.textContent.toString()
-                       // pDate = currentMap["pubDate"]!!
+                        pDate = currentMap["pubDate"]!!
                     }
 
                     if (currentChild.nodeName.equals("feedburner:origLink", ignoreCase = true)) {
                         currentMap["origLink"] = currentChild.textContent
-                        //origLinkString =   currentMap["origLink"]!!
-                    }
-                    else if (currentChild.nodeName.equals("origLink", ignoreCase = true)) {
+                        origLinkString = currentMap["origLink"]!!
+                    } else if (currentChild.nodeName.equals("origLink", ignoreCase = true)) {
                         currentMap["origLink"] = currentChild.textContent
-                        //origLinkString =   currentMap["origLink"]!!
-                    }
-                    else if (currentChild.nodeName.equals("link", ignoreCase = true)) {
+                        origLinkString = currentMap["origLink"]!!
+                    } else if (currentChild.nodeName.equals("link", ignoreCase = true)) {
                         currentMap["origLink"] = currentChild.textContent
-                        //origLinkString  = currentMap["imageUrl"]!!
+                        origLinkString = currentMap["origLink"]!!
                     }
 
                     if (currentChild.nodeName.equals("media:thumbnail", ignoreCase = true)) {
@@ -272,54 +229,41 @@ class MainActivity : AppCompatActivity() {
 
                         if (imgCount == 1) {
                             currentMap["imageUrl"] = currentChild.attributes.item(0).textContent
-                            //imageUrlString = currentMap["imageUrl"]!!
+                            imageUrlString = currentMap["origLink"]!!
                         }
-                    }
-                    else if (currentChild.nodeName.equals("media:content", ignoreCase = true)) {
+                    } else if (currentChild.nodeName.equals("media:content", ignoreCase = true)) {
                         imgCount++
 
                         if (imgCount == 1) {
                             currentMap["imageUrl"] = currentChild.attributes.item(0).textContent
-                            //imageUrlString = currentMap["imageUrl"]!!
+                            imageUrlString = currentMap["imageUrl"]!!
                         }
-                    }
-                    else if (currentChild.nodeName.equals("thumbnail", ignoreCase = true)) {
+                    } else if (currentChild.nodeName.equals("thumbnail", ignoreCase = true)) {
                         imgCount++
 
                         if (imgCount == 1) {
                             currentMap["imageUrl"] = currentChild.attributes.item(0).textContent
-                            //imageUrlString = currentMap["imageUrl"]!!
+                            imageUrlString = currentMap["imageUrl"]!!
                         }
-                    }
-                    else if (currentChild.nodeName.equals("enclosure", ignoreCase = true)) {
+                    } else if (currentChild.nodeName.equals("enclosure", ignoreCase = true)) {
                         imgCount++
 
                         if (imgCount == 1) {
                             currentMap["imageUrl"] = currentChild.attributes.item(0).textContent
-                            //imageUrlString = currentMap["imageUrl"]!!
+                            imageUrlString = currentMap["imageUrl"]!!
                         }
                     }
-                    /*if(getImage(currentChild.attributes.item(0).textContent) != null)
-                    {
-                        currentMap["imageUrl"] = currentChild.attributes.item(0).textContent//getImage(currentChild.attributes.item(0).textContent)
-                    }*/
-                    //dao!!.insertNewsItem(RssUtils.articleToNewsItem(article)
-                    /*if(title != "" && description != "" && origLinkString != "" &&  pDate != "" &&  imageUrlString != "") {
-                        var newsItem =
-                            NewsItem(title, description, pDate, origLinkString, imageUrlString)
-
-                            dao!!.insertNewsItem(newsItem)
-                    }*/
-                    //println("mewo")
                 }
                 if (currentMap != null && !currentMap.isEmpty()) {
                     items.add(currentMap)
+                    var newsItem =
+                        NewsItem(title, description, pDate, origLinkString, imageUrlString)
+                    dao!!.insertNewsItem(newsItem)
                 }
                 imgCount = 0
             }
             //loadNewsItems()
             return items
-
         }
     }
 
@@ -335,6 +279,39 @@ class MainActivity : AppCompatActivity() {
         //recyclerView.setAdapter(adapter)
     }*/
 
+    private fun getDataFromRoom() //: ArrayList<HashMap<String, String>>?
+    {
+        val items = ArrayList<HashMap<String, String>>()
+        for (item in dao.getNewsItems()) {
+
+            var currentMap: HashMap<String, String>?
+            currentMap = HashMap()
+
+            currentMap["title"] = item.newsItemTitle
+            currentMap["description"] = item.newsItemDescription
+            currentMap["pubDate"] = item.newsItemPubDate
+            currentMap["origLink"] = item.newsOrigLink
+            if (item.newsItemImage != null && item.newsItemImage != "")
+                currentMap["imageUrl"] = item.newsItemImage
+            //else
+            //    currentMap["imageUrl"] = = ""
+
+            if (currentMap != null && !currentMap.isEmpty()) {
+                items.add(currentMap)
+            }
+        }
+
+        if (items == null) {
+            showToast("Please check your connection and try again.")
+        } else {
+            val before = resultItems.size
+            resultItems.clear()
+            resultItems.addAll( items)
+            mAdapter.notifyItemRangeInserted(before,  items.size)
+            mRecyclerView.invalidate()
+
+        }
+    }
 
 
     private fun showProgressDialog() {
@@ -399,9 +376,6 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    /*fun onNewsItemClick(newsItem: NewsItem) {
-        val show = Intent(this, ShowNewsItemActivity::class.java)
-        show.putExtra(NOTE_EXTRA_Key, newsItem.id)
-        startActivity(show)
-    }*/
+
+
 }
