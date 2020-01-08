@@ -214,15 +214,21 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     if (currentChild.nodeName.equals("feedburner:origLink", ignoreCase = true)) {
-                        currentMap["origLink"] = currentChild.textContent
-                        origLinkString = currentMap["origLink"]!!
-                    } else if (currentChild.nodeName.equals("origLink", ignoreCase = true)) {
-                        currentMap["origLink"] = currentChild.textContent
-                        origLinkString = currentMap["origLink"]!!
-                    } else if (currentChild.nodeName.equals("link", ignoreCase = true)) {
-                        currentMap["origLink"] = currentChild.textContent
+                        currentMap["origLink"] = currentChild.textContent.toString()
                         origLinkString = currentMap["origLink"]!!
                     }
+                    else if (currentChild.nodeName.equals("origLink", ignoreCase = true)) {
+                        currentMap["origLink"] = currentChild.textContent.toString()
+                        origLinkString = currentMap["origLink"]!!
+                    }else if (currentChild.nodeName.equals("href", ignoreCase = true)) {
+                            currentMap["origLink"] = currentChild.textContent.toString()
+                        origLinkString = currentMap["origLink"]!!
+
+                    } else if (currentChild.nodeName.equals("link", ignoreCase = true)) {
+                        currentMap["origLink"] = currentChild.textContent.toString()
+                        origLinkString = currentMap["origLink"]!!
+                    }
+
 
                     if (currentChild.nodeName.equals("media:thumbnail", ignoreCase = true)) {
                         imgCount++

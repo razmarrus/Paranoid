@@ -18,6 +18,12 @@ import java.util.ArrayList
 import java.util.HashMap
 import androidx.cardview.widget.CardView
 import com.squareup.picasso.Picasso
+import android.Manifest
+import android.net.http.*
+import androidx.core.content.ContextCompat.startActivity
+import com.marvinboots.goodnewseveryone.ShowNewsItemActivity.NOTE_EXTRA_Key
+import com.marvinboots.goodnewseveryone.ShowNewsItemActivity
+
 
 class RecycleViewAdapter( context: Context,  dataset : ArrayList<HashMap<String, String>>) : RecyclerView.Adapter<RecycleViewAdapter.ViewHolder>() {
     private var mDataset = ArrayList<HashMap<String, String>>()
@@ -103,10 +109,26 @@ class RecycleViewAdapter( context: Context,  dataset : ArrayList<HashMap<String,
         override fun onClick(view: View) {
             val map = mDataset[position]
             println(map["origLink"])
-            Log.d("Position", map["origLink"]!!)
-            val uri = Uri.parse(map["origLink"])
-            val intent = Intent(Intent.ACTION_VIEW, uri)
-            mContext.startActivity(intent)
+
+            /*val show = Intent(ShowNewsItemActivity)
+            show.putExtra(NOTE_EXTRA_Key, newsItem.getId())
+            startActivity(show)*/
+
+            if(map["origLink"] != null && map["origLink"] != "" )
+            {
+                Log.d("Position", map["origLink"]!!)
+                //val uri = Uri.parse( map.newsOrigLink)
+                println(map["origLink"])
+                val uri = Uri.parse(map["origLink"]!!)
+                val intent = Intent("margo/Browser")
+                //val intent = Intent(this@RecycleViewAdapter, WebView::class.java)
+                    //intent.putExtra("Url", uri.toString())//feedUrl)
+                intent.setData(Uri.parse(uri.toString()))
+                mContext.startActivity(intent)
+            }
+
+            //val intent = Intent(Intent.ACTION_VIEW, uri)
+            //mContext.startActivity(intent)
         }
     }
 
@@ -142,4 +164,6 @@ class RecycleViewAdapter( context: Context,  dataset : ArrayList<HashMap<String,
             .displayMetrics
         return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT))
     }
+
+
 }
