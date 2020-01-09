@@ -38,9 +38,7 @@ import javax.xml.parsers.ParserConfigurationException
 
 import com.marvinboots.goodnewseveryone.db.NewsItemDao
 import com.marvinboots.goodnewseveryone.db.NewsItemsDB
-import com.marvinboots.goodnewseveryone.model.NewAdapter
 import com.marvinboots.goodnewseveryone.model.NewsItem
-import com.marvinboots.goodnewseveryone.utils.RssUtils
 import com.prof.rssparser.Article
 import com.prof.rssparser.Parser
 
@@ -49,15 +47,13 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mAdapter: RecycleViewAdapter
-    //private lateinit var nAdapter: NewAdapter
     private val resultItems = ArrayList<HashMap<String, String>>()
     private var mFeedUrl = "https://www.nasa.gov/rss/dyn/breaking_news.rss"
     private lateinit var progressDialog: ProgressBar
     private var isLoading: Boolean = false
     private lateinit var networkImageView: ImageView
     private lateinit var dao: NewsItemDao
-    private var newsItems = arrayListOf<NewsItem>()
-    private val articleListLive = MutableLiveData<List<Article>>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -185,8 +181,6 @@ class MainActivity : AppCompatActivity() {
 
                 currentItem = itemlist.item(i)
                 itemChildren = currentItem.childNodes
-
-
                 currentMap = HashMap()
 
                 for (j in 0 until itemChildren.length) {
@@ -194,21 +188,16 @@ class MainActivity : AppCompatActivity() {
                     currentChild = itemChildren.item(j)
 
                     if (currentChild.nodeName.equals("title", ignoreCase = true)) {
-                        // Log.d("Title", String.valueOf(currentChild.getTextContent()));
                         currentMap["title"] = currentChild.textContent.toString()
                         title = currentMap["title"]!!
-
-                        //newsItem.newsItemTitle("qwe")
                     }
 
                     if (currentChild.nodeName.equals("description", ignoreCase = true)) {
-                        // Log.d("description", String.valueOf(currentChild.getTextContent()));
                         currentMap["description"] = currentChild.textContent.toString()
                         description = currentMap["description"]!!
                     }
 
                     if (currentChild.nodeName.equals("pubDate", ignoreCase = true)) {
-                        // Log.d("Title", String.valueOf(currentChild.getTextContent()));
                         currentMap["pubDate"] = currentChild.textContent.toString()
                         pDate = currentMap["pubDate"]!!
                     }
@@ -273,17 +262,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /*fun loadNewsItems() {
-        this.newsItems = ArrayList()
-        val list = dao!!.getNewsItems()
-        this.newsItems!!.addAll(list)
-
-        mAdapter = RecycleViewAdapter(this, newsItems)//resultItems)
-        mRecyclerView.setAdapter(mAdapter)
-        //val adapter = NewsItemAdapter(this, newsItems)
-        //adapter.setListener(this)
-        //recyclerView.setAdapter(adapter)
-    }*/
 
     private fun getDataFromRoom() //: ArrayList<HashMap<String, String>>?
     {
@@ -330,9 +308,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun hideProgressDialog() {
         isLoading = false
-        /*if (progressDialog != null) {
-            progressDialog.cancel()
-        }*/
     }
 
     private fun getDataFromWeb() {
@@ -380,8 +355,5 @@ class MainActivity : AppCompatActivity() {
         }
         return false
     }
-
-
-
 
 }

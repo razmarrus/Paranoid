@@ -43,7 +43,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="GoHome"
-                android:text="Home" />
+                android:text="Home"
+                />
 
         </TableRow>
 
@@ -99,14 +100,13 @@
                 android:background="@drawable/android_news2"
                 android:onClick="FirstLinkToEdit" />
 
-            <ImageButton
+            <!--<ImageButton
                 android:id="@+id/button2"
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/cdc_small"
-                android:onClick="SecondLinkToEdit" />
-
+                android:onClick="SecondLinkToEdit" />-->
 
 
             <ImageButton
@@ -119,8 +119,6 @@
                 tools:layout_editor_absoluteX="-61dp"
                 tools:layout_editor_absoluteY="620dp" />
         </TableRow>
-
-
 
     </TableLayout>
 

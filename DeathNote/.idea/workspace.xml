@@ -7,21 +7,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8c65ce1e-ac3e-4023-8a41-a249cf187806" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_core_core_ktx_1_1_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_core_core_1_2_0_rc01_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_core_core_1_1_0_aar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_core_core_ktx_1_2_0_rc01_aar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../GoodNewsEveryone/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../GoodNewsEveryone/app/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../GoodNewsEveryone/app/src/main/java/com/marvinboots/goodnewseveryone/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../GoodNewsEveryone/app/src/main/java/com/marvinboots/goodnewseveryone/MainActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../GoodNewsEveryone/app/src/main/java/com/marvinboots/goodnewseveryone/RecycleViewAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../GoodNewsEveryone/app/src/main/java/com/marvinboots/goodnewseveryone/RecycleViewAdapter.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../GoodNewsEveryone/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../GoodNewsEveryone/app/src/main/res/layout/activity_main.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../GoodNewsEveryone/app/src/main/res/layout/listitem.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../GoodNewsEveryone/app/src/main/res/layout/listitem.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -53,8 +42,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/marvinboots/deathnote/MainActivity.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="239">
-              <caret line="324" column="60" selection-start-line="324" selection-start-column="60" selection-end-line="324" selection-end-column="60" />
+            <state relative-caret-position="4480">
+              <caret line="419" column="16" selection-start-line="419" selection-start-column="16" selection-end-line="419" selection-end-column="16" />
               <folding>
                 <element signature="e#35#914#0" expanded="true" />
                 <element signature="e#6505#7244#0" />
@@ -178,9 +167,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-9" />
-    <option name="width" value="918" />
-    <option name="height" value="1039" />
+    <option name="x" value="-10" />
+    <option name="width" value="919" />
+    <option name="height" value="1040" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -188,7 +177,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="ProjectPane" />
       <pane id="Scope" />
       <pane id="AndroidView">
@@ -200,18 +188,30 @@
             </path>
             <path>
               <item name="DeathNote" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="e9137016:NonAndroidModuleNode" />
+              <item name="java" type="f7eae187:NonAndroidSourceTypeNode" />
+            </path>
+            <path>
+              <item name="DeathNote" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="e9137016:NonAndroidModuleNode" />
+              <item name="java" type="f7eae187:NonAndroidSourceTypeNode" />
+              <item name="deathnote" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DeathNote" type="1abcf292:AndroidViewProjectNode" />
               <item name="Gradle Scripts" type="ae0cef3a:AndroidBuildScriptsGroupNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../myKeepJava-master(1)" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="not.eligible.for.single.variant.sync" value="true" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.17" />
@@ -313,7 +313,7 @@
     <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
-      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.2409396" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.2409396" />
       <window_info id="Structure" order="2" side_tool="true" />
       <window_info id="Build Variants" order="3" side_tool="true" />
       <window_info id="Image Layers" order="4" />
@@ -329,7 +329,7 @@
       <window_info anchor="bottom" id="Terminal" order="5" />
       <window_info anchor="bottom" id="Event Log" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info active="true" anchor="bottom" id="Build" order="8" visible="true" weight="0.33144477" />
+      <window_info anchor="bottom" id="Build" order="8" visible="true" weight="0.33144477" />
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
       <window_info anchor="right" id="Capture Analysis" order="1" />
       <window_info anchor="right" id="Gradle" order="2" />
@@ -721,8 +721,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/marvinboots/deathnote/MainActivity.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="239">
-          <caret line="324" column="60" selection-start-line="324" selection-start-column="60" selection-end-line="324" selection-end-column="60" />
+        <state relative-caret-position="4480">
+          <caret line="419" column="16" selection-start-line="419" selection-start-column="16" selection-end-line="419" selection-end-column="16" />
           <folding>
             <element signature="e#35#914#0" expanded="true" />
             <element signature="e#6505#7244#0" />

@@ -5,11 +5,11 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view"
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        card_view:cardCornerRadius="@dimen/cardview_default_radius">
+        card_view:cardCornerRadius="@dimen/cardview_default_radius"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,7 +33,7 @@
                     android:orientation="vertical">
 
                     <!--Static Category-->
-                    <TextView
+                    <!--<TextView
                         android:id="@+id/category"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -42,16 +42,17 @@
                         android:maxLines="1"
                         android:text="Android"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="@android:color/darker_gray"/>
+                        android:textColor="@android:color/darker_gray"/>-->
 
                     <TextView
                         android:id="@+id/title"
+                        android:textSize="15dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:lineSpacingExtra="3dp"
                         android:fontFamily="sans-serif-light"
-                        android:maxLines="2"
+                        android:maxLines="8"
                         android:text="Batman will become a Telltale episodic game series in 2016"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="@android:color/black"/>
@@ -64,16 +65,26 @@
                     android:layout_height="wrap_content"/>
             </LinearLayout>
 
+
+
+        <!--<LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="8dp"
+            android:orientation="horizontal">
+
             <TextView
-                android:padding="5dp"
                 android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fontFamily="sans-serif"
                 android:lineSpacingExtra="3dp"
+                android:padding="5dp"
                 android:text="The service is not perfect yet. I did try to search for popular bands like The Beatles and Metallica and was presented with the same results as always. I was successful pulling up the new interface for musician Carla Morrison and my favorite film, Pan’s Labyrinth, though. "
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/black"/>
+                android:textColor="@android:color/black" />
+        </LinearLayout>-->
 
             <LinearLayout
                 android:layout_width="match_parent"

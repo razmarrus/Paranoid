@@ -19,9 +19,10 @@ import java.util.HashMap
 import androidx.cardview.widget.CardView
 import com.squareup.picasso.Picasso
 import android.Manifest
+import android.net.ConnectivityManager
 import android.net.http.*
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.content.ContextCompat.startActivity
-import com.marvinboots.goodnewseveryone.ShowNewsItemActivity.NOTE_EXTRA_Key
 import com.marvinboots.goodnewseveryone.ShowNewsItemActivity
 
 
@@ -32,25 +33,17 @@ class RecycleViewAdapter( context: Context,  dataset : ArrayList<HashMap<String,
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         var tv_title: TextView
-        var tv_category: TextView
-        var tv_description: TextView
+        //var tv_description: TextView
         var tv_date: TextView
         var iv_image: ImageView
-        //var iv_fav: ImageView
-        //var iv_share: ImageView
         var cardView: CardView
 
 
         init {
             tv_title = v.findViewById(R.id.title) as TextView
-            tv_category = v.findViewById(R.id.category) as TextView
-            tv_description = v.findViewById(R.id.description) as TextView
+            //tv_description = v.findViewById(R.id.description) as TextView
             tv_date = v.findViewById(R.id.date) as TextView
-
             iv_image = v.findViewById(R.id.image) as ImageView
-           // iv_fav = v.findViewById(R.id.fav) as ImageView
-            //iv_share = v.findViewById(R.id.share) as ImageView
-
             cardView = v.findViewById(R.id.card_view) as CardView
 
         }
@@ -91,15 +84,10 @@ class RecycleViewAdapter( context: Context,  dataset : ArrayList<HashMap<String,
         val fromHtml = Html.fromHtml(map["description"]).toString()
         val lastStr = fromHtml.substring(2, fromHtml.length - 1)
 
-        holder.tv_description.text = lastStr.trim { it <= ' ' }
+        //holder.tv_description.text = lastStr.trim { it <= ' ' }
         holder.tv_date.text = map["pubDate"]
 
-
         holder.cardView.setOnClickListener(onCardClick(holder.getAdapterPosition()))
-
-        //holder.iv_share.setOnClickListener(onPostShare(holder.getAdapterPosition()))
-
-        //holder.iv_fav.setOnClickListener(onAddfav(holder.getAdapterPosition()))
 
     }
 
@@ -110,11 +98,15 @@ class RecycleViewAdapter( context: Context,  dataset : ArrayList<HashMap<String,
             val map = mDataset[position]
             println(map["origLink"])
 
-            /*val show = Intent(ShowNewsItemActivity)
-            show.putExtra(NOTE_EXTRA_Key, newsItem.getId())
-            startActivity(show)*/
+            val intent = Intent("NoteView")
+            println(map["origLink"].toString() + map["title"].toString())
+            intent.putExtra("origLink", map["origLink"].toString())
+            intent.putExtra("imageUrl", map["imageUrl"].toString())
+            intent.putExtra("title", map["title"].toString())
+            intent.putExtra("description", map["description"].toString())
+            mContext.startActivity(intent)
 
-            if(map["origLink"] != null && map["origLink"] != "" )
+            /*if(map["origLink"] != null && map["origLink"] != "" )
             {
                 Log.d("Position", map["origLink"]!!)
                 //val uri = Uri.parse( map.newsOrigLink)
@@ -125,31 +117,7 @@ class RecycleViewAdapter( context: Context,  dataset : ArrayList<HashMap<String,
                     //intent.putExtra("Url", uri.toString())//feedUrl)
                 intent.setData(Uri.parse(uri.toString()))
                 mContext.startActivity(intent)
-            }
-
-            //val intent = Intent(Intent.ACTION_VIEW, uri)
-            //mContext.startActivity(intent)
-        }
-    }
-
-    internal inner class onPostShare(var position: Int) : View.OnClickListener {
-
-        override fun onClick(view: View) {
-            val map = mDataset[position]
-            val sendIntent = Intent()
-            sendIntent.action = Intent.ACTION_SEND
-            sendIntent.putExtra(
-                Intent.EXTRA_TEXT,
-                map["title"] + " \n" + map["origLink"]
-            )
-            sendIntent.type = "text/plain"
-            mContext.startActivity(Intent.createChooser(sendIntent, "Share this post"))
-        }
-    }
-
-    internal inner class onAddfav(var position: Int) : View.OnClickListener {
-        override fun onClick(view: View) {
-            Toast.makeText(mContext, "Added to favorites", Toast.LENGTH_SHORT).show()
+            }*/
         }
     }
 
@@ -160,8 +128,7 @@ class RecycleViewAdapter( context: Context,  dataset : ArrayList<HashMap<String,
 
 
     fun dpToPx(dp: Int): Int {
-        val displayMetrics = mContext.resources
-            .displayMetrics
+        val displayMetrics = mContext.resources.displayMetrics
         return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT))
     }
 

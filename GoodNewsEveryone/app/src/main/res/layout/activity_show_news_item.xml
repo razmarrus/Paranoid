@@ -26,42 +26,24 @@
                 android:paddingTop="4dp"
                 />
 
-            <TextView
+            <Button
                 android:id="@+id/news_item_guid"
                 android:layout_below="@+id/news_item_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:onClick="serfLink"
                 android:textSize="20sp"
                 android:paddingEnd="12dp"
                 android:paddingStart="12dp"
                 android:paddingTop="4dp"
                 android:layout_gravity="bottom|end"
+                android:text="open in Web View"
+                android:background="@color/colorNoteLightBlue"
                 />
-
-            <TextView
-                android:id="@+id/news_item_author"
-                android:layout_below="@+id/news_item_guid"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="3dp"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/news_item_date"
-                android:layout_below="@+id/news_item_author"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="3dp"
-                android:textSize="12sp" />
 
             <ImageView
                 android:id="@+id/preview_image"
-                android:layout_below="@+id/news_item_date"
+                android:layout_below="@+id/news_item_guid"
                 android:layout_width="wrap_content"
                 android:layout_height="150dp"
                 android:layout_gravity="center"/>

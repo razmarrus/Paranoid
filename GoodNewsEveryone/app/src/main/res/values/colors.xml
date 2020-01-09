@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorAppBackground">#E6E6E6</color>
+    <color name="colorBottomToolbar">#FAFAFA</color>
+
+
+    <!-- Note colors -->
+    <color name="colorNoteDefault">#BBDEFB</color>
+    <color name="colorNoteRed">#FF8A80</color>
+    <color name="colorNoteOrange">#FFD181</color>
+    <color name="colorNoteYellow">#FFFF8D</color>
+    <color name="colorNoteGreen">#BBDEFB</color>
+    <color name="colorNoteCyan">#A7FEEB</color>
+    <color name="colorNoteLightBlue">#80D8FE</color>
+    <color name="colorNoteDarkBlue">#82B1FF</color>
+    <color name="colorNotePurple">#B388FE</color>
+    <color name="colorNotePink">#F9BBD0</color>
+    <color name="colorNoteBrow">#D7CCC8</color>
+    <color name="colorNoteGrey">#CFD8DD</color>
+
+    <!-- Basic colors -->
+    <color name="colorBlack">#000000</color>
+
+
+    <!-- Text colors -->
+    <color name="colorHint">#afafaf</color>
+    <color name="D1C4E9">#D1C4E9</color>
+    <color name="C5CAE9">#C5CAE9</color>
+    <color name="E3F2FD">#E3F2FD</color>
+    <color name="EDE7F6">#EDE7F6</color>
 </resources>
