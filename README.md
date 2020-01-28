@@ -21,6 +21,9 @@ This repository contains four android project: simple hello-world application, c
 4. The only activity of application should display current version name and device ID (which is secured by corresponding runtime permission).
 5. You should properly handle runtime permission and give user a dummy explanation why it is necessary to grant this permission. App should withstand screen rotation and other possible test-cases.
 
+<!--<img src="image_readme" width="300" height="500">-->
+![](image_readme/hello_world.jpg)
+
 
 ## 2. Numbers Mason, what do they mean?
 
@@ -30,6 +33,9 @@ This repository contains four android project: simple hello-world application, c
 4. Each set of functions (numbers + basic functions and scientific functions) should be in separate fragments.
 5. For landscape device orientation app should always be in scientific mode.
 6. Create a 'demo' build flavor with only basic functions available for both screen orientations. User should be able to have both 'demo' and 'full' versions on device at the same time.
+
+![](image_readme/basic_calculator.jpg)
+![](image_readme/engi_calculator.jpg)
 
 
 ## 3. Gotta note them all!
@@ -42,6 +48,9 @@ This repository contains four android project: simple hello-world application, c
 
 Try to use components from google material design. Take a look at android app architecture guides across internet to avoid common pitfalls.
 
+![](image_readme/notes.jpg)
+![](image_readme/new_note.jpg)
+
 
 ## 4. Yet another feed
 
@@ -53,5 +62,5 @@ Try to use components from google material design. Take a look at android app ar
 6. App should track and display network state (icon, snackbar, etc). User should be aware when app goes offline and online.
 7. All network operations should not block user interface and should have loading indicator if necessary.
 
-
+![](image_readme/rss.jpg)
     
